@@ -1,6 +1,7 @@
 package ssu.swcontest2023.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 import ssu.swcontest2023.domain.Product;
 
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
+@Primary
 public class JpaProductRepository implements ProductRepository {
 
     private final EntityManager em;
@@ -24,7 +26,7 @@ public class JpaProductRepository implements ProductRepository {
         return product;
     }
 
-    @Override
+    //@Override
     public int saveList(List<Product> products) {
         //* 내용부 수정하기
         return 0;

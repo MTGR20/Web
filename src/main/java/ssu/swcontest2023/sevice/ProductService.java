@@ -26,7 +26,7 @@ public class ProductService {
      */
     public void searchList(List<Product> products){
         // * DB 데이터 전달받기
-        productRepository.saveList(products);
+        //productRepository.saveList(products);
     }
 
 

@@ -35,15 +35,18 @@
         </div>
     </nav>
     <!-- ADDED -->
+
     <div class="search_wrap">
-        <form action = "/" method="GET">
+    <!--form에 작성한 데이터를 어디로 보낼지 지정-->
+        <form action = "/product" method="post">
             <div class="search_area fw-bolder">
                 <input type="text" name="name" placeholder="   원하는 상품을 검색하세요" >
                 <!--button>Search</button-->
-                <a class="btn btn-primary btn-new ms-sm-3 mt-sm-n3 fs-1 fw-bolder" href="product.html">검색</a>
+                <input type="submit" value="검색">
             </div>
         </form>
     </div>
+
     <!-- Header-->
     <header class="py-5">
         <div class="container px-5 pb-5">
