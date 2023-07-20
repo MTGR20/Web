@@ -1,14 +1,16 @@
 package ssu.swcontest2023.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Arrays;
+
 @Controller
 public class SearchController {
-    
+
+    private static final String path = "C:\\Users\\jweun\\Spring\\sw-contest-2023\\src\\main\\resources\\test_files";
+
     //* 참고
     //product.html은 만들어져있는데
     //form에서 name 받아오는거랑 크롤링, DB 연결 등 완료해야 페이지 보일 것임.
@@ -17,8 +19,51 @@ public class SearchController {
     @PostMapping("product") // 데이터를 보낼 곳
     public String search(@RequestParam("name") String name) {
         //public String search(@RequestParam(value = "name") String name, Model model){
-        System.out.println("SearchController.save");
+        //System.out.println("SearchController.save");
         System.out.println("검색: " + name);
+
+        String[] sendAr = new String[1];
+        Arrays.fill(sendAr, name);
+
+        SocketClient.main(sendAr);
+
+        //Socket
+        //ClientConnect cc = new ClientConnect("10.21.20.48", 9999);
+        //String2json
+        //ObjectMapper mapper = new ObjectMapper();
+        //String jsonStr = mapper.writeValueAsString(name);
+        //String newFileName= cc.getFile(path, jsonStr);
+        //cc.closeConnections();
+
+        //Socket socket = new Socket("10.21.20.48", 8888);
+        // 메시지 보내기
+        //OutputStream out = socket.getOutputStream();
+        //DataOutputStream dos = new DataOutputStream(out);
+        //dos.writeUTF("Hello");
+        //dos.close();
+        //socket.close();
+
+        /*
+        try{
+            ServerSocket serversocket = new ServerSocket(8888);
+
+            Socket socket = serversocket.accept();
+
+            // 메시지 받기
+            InputStream in = socket.getInputStream();
+            DataInputStream dis = new DataInputStream(in);
+
+            System.out.println("Received: " + dis.readUTF());
+
+            dis.close();
+            socket.close();
+            serversocket.close();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        */
+
         //System.out.println("name = " + name);
         //검색명 가져와(form.getName()) 크롤링 코드 활용해서 크롤링 후 디비에 저장한다.
         //* (여기서 product name만 받아서 유림이 코드에 전달해줘야하는디) 크롤링 코드를 JAVA로 다시 써서 여기서 해야할 것 같기도.

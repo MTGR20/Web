@@ -1,6 +1,4 @@
-package spring.user.domain;
-
-        import java.sql.*;
+import java.sql.*;
 
 public class SQLtest {
     public static void main(String[] args) {

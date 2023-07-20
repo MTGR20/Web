@@ -30,7 +30,7 @@ from matplotlib import pyplot as plt
 
 import uuid
 import json
-import cv2
+#import cv2
 import requests
 import re
 
@@ -38,12 +38,12 @@ import sys
 
 
 HomeUrl = "https://front.homeplus.co.kr/"
-GooUrl = "https://www.google.co.kr/"
+#GooUrl = "https://www.google.co.kr/"
 api_url = "api_url" #수정하기 Naver Clovar
 secret_key = "secret_key" #수정하기 Naver Clovar
 dir_path = "dir_path" #수정하기 이미지 저장할 경로
 path_folder = "path" #수정하기 (=dir_path)
-filename ='voiceFile'#수정하기 (보이스 파일 저장할 경로)
+filename ='voiceFile' #(보이스 파일 저장할 경로)
 
 # get_key()
 # start_db(), close_db()
@@ -56,17 +56,19 @@ filename ='voiceFile'#수정하기 (보이스 파일 저장할 경로)
 # main
 def main(argv):
     opt = int(argv[1])
+    print(opt)
     
-    #opt로 db connect 관리, product 상품 정보 txt로 호출, speak() 실행,  
-    
-    if (opt<-1): #db connect 시작 (맨처음 1번 호출)
+    #opt로 db connect 관리, product 상품 정보 txt로 호출, speak() 실행,
+   '''
+    if (opt<0): #db connect 시작 (맨처음 1번 호출)
         start_db()
     else if (opt==0):
         close_db()
     else if (opt==1): #db connect 닫기 (맨마지막 1번 호출)
-        return (get_product(key))
+        get_product(argv[2])
     else if (opt>1):
-        speak(argv[2])
+        speak(argv[2]) #메인 종료 시 종료?
+        '''
 
 if __name__ == "__main__": #argv[1]: opt , #argv[2]: 상품명
     main(sys.argv)
@@ -85,7 +87,7 @@ def speak(text):
 # 사용자 음성 검색
 def get_key ():
     # 안내 방송(음성)
-    speak("안녕하세요. 검색하실 상품을 말씀해주세요.")
+    speak("안녕하세요. 검색할 상품을 말씀해주세요.")
     
     # 사용자 음성 듣기
     r = sr.Recognizer()
@@ -163,7 +165,7 @@ def get_product (key):
     img_path=get_dirimgs(name_list,dir_path) #
     re=naver_clova(img_path) # 클로바 OCR 실행
     stts_allergy=find_allergy(name_list,re) # 알러지 정보 추출
-    return stts_allergy, name_list, price_list, link_list;
+    print(' '.join(stts_allergy)) #return stts_allergy, name_list, price_list, link_list ##체크
 
 def get_img(link_list):
     HomeUrl=link_list[0:10].copy()
@@ -211,7 +213,7 @@ def get_preimg(name_list,results):
         
         urllib.request.urlretrieve(img_link, path_folder + f'{name_list[i]}.jpg')
         i += 1
-
+'''
 def img_show(title='image', img=None, figsize=(8 ,5)):
     plt.figure(figsize=figsize)
  
@@ -245,6 +247,7 @@ def img_show(title='image', img=None, figsize=(8 ,5)):
         plt.title(title)
         plt.xticks([]), plt.yticks([])
         plt.show()
+'''
 
 def get_dirimgs(name_list,path):
     root_dir = path # 디렉토리

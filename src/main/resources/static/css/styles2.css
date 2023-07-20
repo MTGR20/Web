@@ -11746,12 +11746,15 @@ html {
 .search_area{
     display: inline-block;
     margin-top: 10px;
-    margin-left: 150px;
+    margin-left: 250px;
     position: relative;
+    width: 100%;
 }
 .search_area input{
       height: 85px;
     width: 1000px;
   font-size: 2rem;
   position: relative;
+
+  text-align: center;
 }

@@ -17,6 +17,7 @@ repositories {
 
 dependencies {
 	runtimeOnly 'org.springframework.boot:spring-boot-devtools'
+	implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.10.0'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.27'

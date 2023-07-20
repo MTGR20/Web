@@ -1,12 +1,15 @@
-import sys
+import os
+pid = os.fork()
 
-def sum(v1,v2):
-    result = int(v1) + int(v2)
-    print(result)
+//path = "C:\Users\jweun\Spring\sw-contest-2023\src\main\resources\python\test.py"
 
+if pid > 0:
+    print('부모 프로세스의 실행 흐름', os.getpid())
+elif pid == 0:
+    print('자식 프로세스의 실행 흐름', os.getpid())
+    os.execl(sys.executable, sys.executable, 'test.py')
+else:  # pid < 0
+    print('fork 오류')
 
-def main(argv):
-    sum(argv[1], argv[2])
+print('모두 호출', os.getpid())
 
-if __name__ == "__main__":
-    main(sys.argv)
