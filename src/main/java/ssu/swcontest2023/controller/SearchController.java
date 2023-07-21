@@ -9,71 +9,23 @@ import java.util.Arrays;
 @Controller
 public class SearchController {
 
-    private static final String path = "C:\\Users\\jweun\\Spring\\sw-contest-2023\\src\\main\\resources\\test_files";
+    private static final String path = "C:\\Users\\jweun\\Spring\\sw-contest-2023\\src\\main\\resources\\test_files"; //경로 수정해서 사용하세요
 
-    //* 참고
-    //product.html은 만들어져있는데
-    //form에서 name 받아오는거랑 크롤링, DB 연결 등 완료해야 페이지 보일 것임.
-
-    //* Post mapping? //form을 쓰긴 함 --> 알아보고..
-    @PostMapping("product") // 데이터를 보낼 곳
+    @PostMapping("product")
     public String search(@RequestParam("name") String name) {
-        //public String search(@RequestParam(value = "name") String name, Model model){
-        //System.out.println("SearchController.save");
+    //public String search(@RequestParam(value = "name") String name, Model model){
         System.out.println("검색: " + name);
 
-        String[] sendAr = new String[1];
-        Arrays.fill(sendAr, name);
-
-        SocketClient.main(sendAr);
-
-        //Socket
-        //ClientConnect cc = new ClientConnect("10.21.20.48", 9999);
-        //String2json
-        //ObjectMapper mapper = new ObjectMapper();
-        //String jsonStr = mapper.writeValueAsString(name);
-        //String newFileName= cc.getFile(path, jsonStr);
-        //cc.closeConnections();
-
-        //Socket socket = new Socket("10.21.20.48", 8888);
-        // 메시지 보내기
-        //OutputStream out = socket.getOutputStream();
-        //DataOutputStream dos = new DataOutputStream(out);
-        //dos.writeUTF("Hello");
-        //dos.close();
-        //socket.close();
-
-        /*
-        try{
-            ServerSocket serversocket = new ServerSocket(8888);
-
-            Socket socket = serversocket.accept();
-
-            // 메시지 받기
-            InputStream in = socket.getInputStream();
-            DataInputStream dis = new DataInputStream(in);
-
-            System.out.println("Received: " + dis.readUTF());
-
-            dis.close();
-            socket.close();
-            serversocket.close();
+        if (!name.isBlank()){
+            String[] sendAr = new String[1];    //상품명 받아오고
+            Arrays.fill(sendAr, name);
+            SocketClient.main(sendAr);          //소켓 통신 요청 (:상품명 넘겨주고 상품 정보가 저장된 파일 경로 스트링 얻기) / 아님 자바에서 디비 접근하게 할거면 파이썬 소켓 서버에서는 디비에 저장까지만 해도 됨
+            return "product";
         }
-        catch(Exception e){
-            e.printStackTrace();
+        else{
+            //empty.html (상품명 없이 검색 누른 경우 띄울 창)
+            return "empty";
         }
-        */
-
-        //System.out.println("name = " + name);
-        //검색명 가져와(form.getName()) 크롤링 코드 활용해서 크롤링 후 디비에 저장한다.
-        //* (여기서 product name만 받아서 유림이 코드에 전달해줘야하는디) 크롤링 코드를 JAVA로 다시 써서 여기서 해야할 것 같기도.
-        //** https://lotuus.tistory.com/108
-        //* (productService.searchList(products))
-        //이후 디비 저장 내용을 활용해 뷰로 띄우면 된다. (model.addAttribute())
-        //* 다음 상품 보여주기는 뷰는 그대로 두고 상품 이미지와 상품 정보들만 바꿔주면 된다.
-        //return "homplus"; //|| //return "redirect:/";
-        //리다이렉트는 뒤로가기 눌렀을 경우에만 해주고, 아니라면 대기하다가 상품 선택 시 홈플러스 페이지를 띄워준다. (html 추가 생성)
-        return "product";
     }
 }
 
