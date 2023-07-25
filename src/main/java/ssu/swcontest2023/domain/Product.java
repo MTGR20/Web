@@ -9,24 +9,78 @@ import javax.persistence.*;
 @Table(name = "test_tbl")
 public class  Product {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    /**
+     * @param id
+     * @param name
+     * @param price
+     * @param link
+     * @param src_link
+     */
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) // generate identity?
+    private Long id;            //`ranks` ?
 
     @Column(name="name")
     private String name;
 
+    @Column(name="price")
+    private String price;
+
+    @Column(name="link")        //DEFAULT NULL
+    private String link;
+
+    @Column(name="src_link")    //DEFAULT NULL
+    private String src_link;
+
+
+    public Product(){};
+    public Product(Long id, String name, String price, String link, String src_link) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.link = link;
+        this.src_link = src_link;
+    }
+
+
     public Long getId() {
         return id;
-    }
-    public String getName() {
-        return name;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
+
+    public String getName() {
+        return name;
+    }
+
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public String getSrc_link() {
+        return src_link;
+    }
+
+    public void setSrc_link(String src_link) {
+        this.src_link = src_link;
     }
 
 }

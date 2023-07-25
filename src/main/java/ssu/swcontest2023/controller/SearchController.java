@@ -9,7 +9,7 @@ import java.util.Arrays;
 @Controller
 public class SearchController {
 
-    private static final String path = "C:\\Users\\jweun\\Spring\\sw-contest-2023\\src\\main\\resources\\test_files"; //경로 수정해서 사용하세요
+    //private static final String path = "C:\\Users\\jweun\\Spring\\sw-contest-2023\\src\\main\\resources\\"; //경로 수정해서 사용하세요
 
     @PostMapping("product")
     public String search(@RequestParam("name") String name) {
@@ -19,12 +19,13 @@ public class SearchController {
         if (!name.isBlank()){
             String[] sendAr = new String[1];    //상품명 받아오고
             Arrays.fill(sendAr, name);
-            SocketClient.main(sendAr);          //소켓 통신 요청 (:상품명 넘겨주고 상품 정보가 저장된 파일 경로 스트링 얻기) / 아님 자바에서 디비 접근하게 할거면 파이썬 소켓 서버에서는 디비에 저장까지만 해도 됨
+            SocketClient.main(sendAr);          //소켓 통신 요청 (:상품명 넘겨주고 상품 정보가 저장된 파일 경로 스트링 얻기 || 완료 메세지만 받기 ) / 아님 자바에서 디비 접근하게 할거면 파이썬 소켓 서버에서는 디비에 저장까지만 해도 됨
+            // (로딩 화면 띄우다가)
+            // 소켓 응답 받으면 product로 연결하든가
             return "product";
         }
         else{
-            //empty.html (상품명 없이 검색 누른 경우 띄울 창)
-            return "empty";
+            return "empty"; //혹은 그냥 index?
         }
     }
 }
