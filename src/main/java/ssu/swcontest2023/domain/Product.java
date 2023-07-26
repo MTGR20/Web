@@ -9,16 +9,8 @@ import javax.persistence.*;
 @Table(name = "test_tbl")
 public class  Product {
 
-    /**
-     * @param id
-     * @param name
-     * @param price
-     * @param link
-     * @param src_link
-     */
-
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) // generate identity?
-    private Long id;            //`ranks` ?
+    private Long id;            //`ranks`
 
     @Column(name="name")
     private String name;
@@ -29,17 +21,25 @@ public class  Product {
     @Column(name="link")        //DEFAULT NULL
     private String link;
 
+    @Column(name="main_picture")
+    private String pic;
+
     @Column(name="src_link")    //DEFAULT NULL
     private String src_link;
 
+    @Column(name="Allergy_extraction")
+    private String allergy;
 
-    public Product(){};
-    public Product(Long id, String name, String price, String link, String src_link) {
+
+    public Product(){}
+    public Product(Long id, String name, String price, String link, String pic, String src_link, String allergy) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.link = link;
+        this.pic = pic;
         this.src_link = src_link;
+        this.allergy = allergy;
     }
 
 
@@ -75,6 +75,14 @@ public class  Product {
         this.link = link;
     }
 
+    public String getPic() {
+        return pic;
+    }
+
+    public void setPic(String pic) {
+        this.pic = pic;
+    }
+
     public String getSrc_link() {
         return src_link;
     }
@@ -82,6 +90,16 @@ public class  Product {
     public void setSrc_link(String src_link) {
         this.src_link = src_link;
     }
+
+
+    public String getAllergy() {
+        return allergy;
+    }
+
+    public void setAllergy(String allergy) {
+        this.allergy = allergy;
+    }
+
 
 }
 

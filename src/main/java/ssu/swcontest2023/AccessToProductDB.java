@@ -10,9 +10,10 @@ public class AccessToProductDB {
 
         //socket server (python) -> TABLE 생성해두었다는 가정 하에 DB 접근해서 사용할 예정
 
-        //SQL TEST
         ProductServiceSQL p = new ProductServiceSQL();
-        ArrayList<Product> list = p.selectAll();
+        ArrayList<Product> list = p.selectAll();        //productList: view에서 이용!
+
+        //프린트 TEST
         System.out.println("[Print All]");
         for (Product product : list) {
             printProduct(product);
@@ -30,7 +31,9 @@ public class AccessToProductDB {
         String name = String.format("%-25s ", product.getName());
         String price = String.format("%-10s ", product.getPrice());
         String link = String.format("%-100s ", product.getLink());
+        String pic = String.format("%-100s ", product.getPic());
         String src_link = String.format("%100s ", product.getSrc_link());
-        System.out.println(id + name + price + link + src_link);
+        String allergy = String.format("%-100s ", product.getAllergy());
+        System.out.println(id + name + price + link + pic + src_link + allergy);
     }
 }

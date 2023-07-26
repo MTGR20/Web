@@ -41,8 +41,7 @@ public class ProductServiceSQL {
             //CUD: executeUpdate(sql) 함수: ret int 값
             //R: executeQuery(sql) 함수: ret ResultSet 객체
             stmt.executeUpdate(schema);
-            String sql = selectAllSQL;
-            rs = stmt.executeQuery(sql);
+            rs = stmt.executeQuery(selectAllSQL);
 
             list = new ArrayList<>();
             while (rs.next()) {
@@ -50,8 +49,10 @@ public class ProductServiceSQL {
                 String name = rs.getString("name");
                 String price = rs.getString("price");
                 String link = rs.getString("link");
+                String pic = rs.getString("main_picture");
                 String src_link = rs.getString("src_link");
-                Product product = new Product(id, name, price, link, src_link);
+                String allergy = rs.getString("Allergy_extraction");
+                Product product = new Product(id, name, price, link, pic, src_link, allergy);
                 list.add(product);
             }
 
@@ -112,8 +113,10 @@ public class ProductServiceSQL {
                 String name = rs.getString("name");
                 String price = rs.getString("price");
                 String link = rs.getString("link");
+                String pic = rs.getString("main_picture");
                 String src_link = rs.getString("src_link");
-                product = new Product(id, name, price, link, src_link);
+                String allergy = rs.getString("Allergy_extraction");
+                product = new Product(id, name, price, link, pic, src_link, allergy);
             }
 
         } catch (SQLException e) {
