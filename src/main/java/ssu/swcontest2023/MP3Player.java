@@ -31,7 +31,17 @@ class MP3Player {
         // Enter 입력 시, 재생 종료
         int keycode = System.in.read();
         if (keycode > 0) mp3Player.close();
-        
+
+//        addKeyListener(new KeyListener() {
+//            @Override
+//            public void keyTyped(KeyEvent e) { }
+//            @Override
+//            public void keyPressed(KeyEvent e) { mp3Player.close(); }
+//            @Override
+//            public void keyReleased(KeyEvent e) { }
+//        });
+//        this.setFoucusable(true);
+//        this.requestFocus();
     }
 
     public MP3Player(String mp3FileToPlay) {
