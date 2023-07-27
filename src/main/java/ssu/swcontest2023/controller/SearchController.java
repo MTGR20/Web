@@ -19,7 +19,8 @@ public class SearchController {
         String[] sendAr = null;
 
         if (!name.isBlank()){
-            Arrays.fill(sendAr, name);
+//            Arrays.fill(sendAr, name);
+            sendAr = new String[]{name};
         }
         else{
             sendAr = new String[]{"0"};

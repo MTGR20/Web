@@ -8,6 +8,8 @@ import java.net.*;
 import java.lang.*;
 import java.util.ArrayList;
 
+import static java.lang.Thread.sleep;
+
 public class SocketClient {
         public static void main(String[] args) {
 
@@ -20,6 +22,12 @@ public class SocketClient {
 
                 dout.writeUTF(args[0]);
                 dout.flush();
+
+                // 로딩 음성 출력
+                sleep(1000);
+                String mp3 = "src/main/resources/MP3/voice2.mp3";
+                MP3Player mp3Player = new MP3Player(mp3);
+                mp3Player.play();
 
                 //System.out.println("send first mess");
                 String str = din.readUTF();//in.readLine();

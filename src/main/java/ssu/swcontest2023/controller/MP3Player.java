@@ -1,14 +1,9 @@
-package ssu.swcontest2023;
+package ssu.swcontest2023.controller;
 
 import javazoom.jl.player.Player;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
-import java.util.Scanner;
-
-import static com.sun.java.accessibility.util.AWTEventMonitor.addKeyListener;
 
 class MP3Player {
     private final String mp3FileToPlay;
@@ -17,7 +12,7 @@ class MP3Player {
     // 테스트
     public static void main(String[] args) throws Exception {
 
-        String filename = "src/main/resources/sound/voice.mp3";    // 파일 경로
+        String filename = "src/main/resources/MP3/sample.mp3";    // 파일 경로
         MP3Player mp3Player = new MP3Player(filename);
         mp3Player.play();                                          // 재생
 
