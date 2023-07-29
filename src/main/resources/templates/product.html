@@ -37,12 +37,12 @@
       <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="https://dummyimage.com/500x500/dee2e6/6c757d.jpg" alt="..." /></div>
       <div class="col-md-6">
         <!--div class="small mb-1">SKU: BST-498</div-->
-        <h1 class="display-2 fw-bolder">삼양 불닭볶음면</h1>
+        <h1 class="display-2 fw-bolder" th: text = "${productName}">상품명</h1>
         <div class="fs-5 mb-5">
           <span class="fs-4 text-decoration-line-through">5,100&#92;</span>
           <span>4,080&#92;</span>
         </div>
-        <p class="lead fs-1">내용 설명 작성 구간 ####### ####### ####### ####### ####### ####### #######</p>
+        <p class="lead fs-1" th: text = "${productSubscribes}">자막</p>
         <div class="d-flex pt-5">
           <!--input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" /-->
           <span class="badge bg-dark text-white me-4 rounded-pill">0</span>

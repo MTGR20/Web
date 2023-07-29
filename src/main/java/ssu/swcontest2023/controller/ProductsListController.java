@@ -1,18 +1,45 @@
 package ssu.swcontest2023.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import ssu.swcontest2023.AccessToProductDB;
+import ssu.swcontest2023.domain.Product;
+
+import java.util.ArrayList;
 
 @Controller
 public class ProductsListController {
 
-    //AccessToProductDB.main(); => DB에서 읽어와 View로 띄우는 부분은 productsListController에서 처리하면 됨
+    ArrayList<Product> productList;
+    Product product;
 
-    //* 소켓 통신을 통해 가져온 상품 정보(이름, 가격, 이미지, 알레르기 정보)를 활용해 || 디비 저장 내용을 활용해
-    //  \뷰로 띄우면 된다. (model.addAttribute())
-    //* 다음 상품 보여주기는 뷰는 그대로 두고 상품 이미지와 상품 정보들만 바꿔주면 된다.
-    //* home 눌렀을 경우에 return "redirect:/";
-    //* 일반 상태는 입력 대기 (키보드 / 음성)
-    //  \키보드 입력으로 버튼 클릭 시 해당 상품 페이지 (홈플러스) 띄워준다. return "homplus";
-    //  \음성 입력 시 소켓 통신을 통해 선택인지 패스인지 값을 받아온 후 선택일 경우만 홈플러스 상품 페이지 띄워준다.
+    @GetMapping("product")
+    public void productView(Model model){
+
+        productList = AccessToProductDB.selectListFromDB();
+        int id = 0;
+        product = AccessToProductDB.selectOneFromDB(id);
+
+        String rank = String.format("%d", product.getId());
+        String name = String.format("%s", product.getName());
+        String price = String.format("%s", product.getPrice());
+        //String link = String.format("%s", product.getLink()); //소스 링크 //추후 사용
+        //String pic = String.format("%s", product.getPic()); //상품 이미지 //추후 사용
+        String allergy = String.format("%s", product.getAllergy());
+
+        String stts_msg = rank +"번 제품의 이름은 " + name + "입니다. 가격은 " +
+                price + "원 입니다. 알러지정보는 " + allergy + "입니다.";
+
+        //model.addAttribute("productName", name);
+        //model.addAttribute("productSubscribes", stts_msg);
+
+        AccessToProductDB.printProductList(productList);
+        //productList.get###() 활용해 필요한 곳곳 뷰로 띄우기 //model.addAttribute()
+
+        //home 버튼 입력되면 return "redirect:/";
+        //상품 선택 입력되면 return "homeplus"; //: 해당 product link 띄우기
+
+    }
 
 }

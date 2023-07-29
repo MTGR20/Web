@@ -15,8 +15,8 @@ public class ProductServiceSQL {
     private static final String password = "root";
 
     private static final String schema = "use new_schema";
-    private static final String selectAllSQL = "select * from test_tbl";
-    private static final String selectOneSQL = "select * from test_tbl where ranks = ";
+    private static final String selectAllSQL = "select * from page_items";
+    private static final String selectOneSQL = "select * from page_items where ranks = ";
 
     public ArrayList<Product> selectAll(){
 
