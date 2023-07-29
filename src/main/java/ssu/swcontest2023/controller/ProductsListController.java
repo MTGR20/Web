@@ -19,7 +19,7 @@ public class ProductsListController {
     @GetMapping("/product")
     public void productView(Model model){
 
-        int id = 1;
+        int id = 2;
         product = AccessToProductDB.selectOneFromDB(id);
         //AccessToProductDB.printProduct(product);
 
@@ -27,7 +27,7 @@ public class ProductsListController {
         String name = String.format("%s", product.getName());
         String price = String.format("%s", product.getPrice());
         //String link = String.format("%s", product.getLink()); //소스 링크 //추후 사용
-        //String pic = String.format("%s", product.getPic()); //상품 이미지 //추후 사용
+        String pic = String.format("%s", product.getPic()); //상품 이미지 //추후 사용
         String allergy = String.format("%s", product.getAllergy());
 
         String stts_msg = rank + "번 제품의 이름은 " + name + "입니다. 가격은 " +
@@ -35,6 +35,8 @@ public class ProductsListController {
 
         System.out.println(stts_msg);
         model.addAttribute("productName", name);
+        model.addAttribute("product_link", pic);
+
         model.addAttribute("productInfo", stts_msg);
         model.addAttribute("productPrice", price);
 

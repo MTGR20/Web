@@ -12,9 +12,9 @@ public class ProductServiceSQL {
     private static final String driver = "com.mysql.cj.jdbc.Driver";
     private static final String url = "jdbc:mysql://localhost:3306";
     private static final String user = "root";
-    private static final String password = "root";
+    private static final String password = "lch741062@";
 
-    private static final String schema = "use new_schema";
+    private static final String schema = "use test_db";
     private static final String selectAllSQL = "select * from page_items";
     private static final String selectOneSQL = "select * from page_items where ranks = ";
 
@@ -34,7 +34,7 @@ public class ProductServiceSQL {
 
         try {
             c = DriverManager.getConnection(url, user, password);   //DB 서버 연결
-            System.out.println("연결 완료!!!");
+            System.out.println("selectALL 연결 완료!!!");
 
             stmt = c.createStatement();   //SQL 실행 채널 생성
 
