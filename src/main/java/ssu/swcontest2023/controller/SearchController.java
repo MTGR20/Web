@@ -3,6 +3,7 @@ package ssu.swcontest2023.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ssu.swcontest2023.AccessToProductDB;
 
@@ -15,7 +16,7 @@ public class SearchController {
 
     String[] sendAr = null;
 
-    @PostMapping("loading")
+    @RequestMapping("/search")
     public String search(@RequestParam("name") String name) {
     //public String search(@RequestParam(value = "name") String name, Model model){
         System.out.println("검색: " + name);
@@ -26,9 +27,8 @@ public class SearchController {
             sendAr = new String[]{"0"};
         }
 
-        //iframe??
         SocketClient.main(sendAr);
-        return "product";
+        return "redirect:/product";
     }
 
 }

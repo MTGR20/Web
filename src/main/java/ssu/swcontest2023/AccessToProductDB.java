@@ -6,16 +6,15 @@ import ssu.swcontest2023.sevice.ProductServiceSQL;
 import java.util.ArrayList;
 
 public class AccessToProductDB {
+
+    static ProductServiceSQL db = new ProductServiceSQL();
+
     public static ArrayList<Product> selectListFromDB() {
-        ProductServiceSQL db = new ProductServiceSQL();
-        ArrayList<Product> list = db.selectAll();        //productList: view에서 이용!
-        return list;
+        return db.selectAll();
     }
 
     public static Product selectOneFromDB(int id){
-        ProductServiceSQL db = new ProductServiceSQL();
-        Product product = db.selectById(id);
-        return product;
+        return db.selectById(id);
     }
 
     public static void printProductList(ArrayList<Product> list){

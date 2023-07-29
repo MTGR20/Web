@@ -3,6 +3,8 @@ package ssu.swcontest2023.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import ssu.swcontest2023.AccessToProductDB;
 import ssu.swcontest2023.domain.Product;
 
@@ -14,12 +16,12 @@ public class ProductsListController {
     ArrayList<Product> productList;
     Product product;
 
-    @GetMapping("product")
+    @GetMapping("/product")
     public void productView(Model model){
 
-        productList = AccessToProductDB.selectListFromDB();
-        int id = 0;
+        int id = 1;
         product = AccessToProductDB.selectOneFromDB(id);
+        //AccessToProductDB.printProduct(product);
 
         String rank = String.format("%d", product.getId());
         String name = String.format("%s", product.getName());
@@ -28,18 +30,16 @@ public class ProductsListController {
         //String pic = String.format("%s", product.getPic()); //상품 이미지 //추후 사용
         String allergy = String.format("%s", product.getAllergy());
 
-        String stts_msg = rank +"번 제품의 이름은 " + name + "입니다. 가격은 " +
+        String stts_msg = rank + "번 제품의 이름은 " + name + "입니다. 가격은 " +
                 price + "원 입니다. 알러지정보는 " + allergy + "입니다.";
 
-        //model.addAttribute("productName", name);
-        //model.addAttribute("productSubscribes", stts_msg);
-
-        AccessToProductDB.printProductList(productList);
-        //productList.get###() 활용해 필요한 곳곳 뷰로 띄우기 //model.addAttribute()
+        System.out.println(stts_msg);
+        model.addAttribute("productName", name);
+        model.addAttribute("productInfo", stts_msg);
+        model.addAttribute("productPrice", price);
 
         //home 버튼 입력되면 return "redirect:/";
         //상품 선택 입력되면 return "homeplus"; //: 해당 product link 띄우기
-
     }
 
 }

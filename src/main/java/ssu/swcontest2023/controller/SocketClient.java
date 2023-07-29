@@ -33,7 +33,7 @@ public class SocketClient {
 
                 //System.out.println("send first mess");
                 String str = din.readUTF();//in.readLine();
-                System.out.println("리턴 받은 메세지: "+str);
+                System.out.println("리턴 받은 메세지: "+ str);
 
                 dout.close();
                 din.close();
