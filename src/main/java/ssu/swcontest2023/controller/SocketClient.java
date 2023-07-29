@@ -20,8 +20,7 @@ public class SocketClient {
     public static void main(String[] args) {
 
             try{
-//                Socket socket = new Socket("172.30.1.87",8000); //IPv4 값 수정해서 실행하세요
-                Socket socket = new Socket("127.0.0.1",8000);
+                Socket socket = new Socket("10.21.20.14",8000); //IPv4 값 수정해서 실행하세요
 
                 DataOutputStream dout=new DataOutputStream(socket.getOutputStream());
                 DataInputStream din=new DataInputStream(socket.getInputStream());
@@ -40,7 +39,7 @@ public class SocketClient {
 
                 //System.out.println("send first mess");
                 String str = din.readUTF();//in.readLine();
-                System.out.println("리턴 받은 메세지: "+str);
+                System.out.println("리턴 받은 메세지: "+ str);
 
                 // 검색된 상품이 없는 경우
                 if (str.equals("")) {
@@ -60,18 +59,18 @@ public class SocketClient {
         public static void connect() throws IOException {
             //                Socket socket = new Socket("172.30.1.87",8000); //IPv4 값 수정해서 실행하세요
             socket = new Socket("127.0.0.1",8000);
-
             dout = new DataOutputStream(socket.getOutputStream());
             din = new DataInputStream(socket.getInputStream());
         }
 
         public static void disconnect() throws IOException {
+            System.out.println("socket disconnect");
             dout.close();
             din.close();
             socket.close();
         }
 
-        public static int sendForRecord(String[] args) throws IOException, InterruptedException {
+        public static String sendForRecord(String[] args) throws IOException, InterruptedException {
             dout.writeUTF(args[0]);
             dout.flush();
 
@@ -79,23 +78,23 @@ public class SocketClient {
             String str = din.readUTF();//in.readLine();
             System.out.println("리턴 받은 메세지: "+str);
 
-            if (str.equals(errorMessage)) return 101;
+            if (str.equals(errorMessage)) return errorMessage;
             // 검색된 상품이 없는 경우
             else if (str.equals("")) searchNothing();
 
-            return 0;
+            return str;
         }
 
         public static void sendForKeyword(String[] args) throws IOException, InterruptedException {
             dout.writeUTF(args[0]);
             dout.flush();
 
-            // 로딩 음성 출력
-            System.out.println("loading message out");
-            sleep(1000);
-            String mp3 = "src/main/resources/MP3/voice2.mp3";
-            MP3Player mp3Player = new MP3Player(mp3);
-            mp3Player.play();
+//            // 로딩 음성 출력
+//            System.out.println("loading message out");
+//            sleep(1000);
+//            String mp3 = "src/main/resources/MP3/voice2.mp3";
+//            MP3Player mp3Player = new MP3Player(mp3);
+//            mp3Player.play();
 
             //System.out.println("send first mess");
             String str = din.readUTF();//in.readLine();

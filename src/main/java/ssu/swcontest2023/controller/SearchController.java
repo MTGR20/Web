@@ -2,7 +2,10 @@ package ssu.swcontest2023.controller;
 
 import org.springframework.boot.autoconfigure.integration.IntegrationProperties;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
@@ -15,12 +18,13 @@ public class SearchController {
     //private static final String path = "C:\\Users\\jweun\\Spring\\sw-contest-2023\\src\\main\\resources\\"; //경로 수정해서 사용하세요
     static boolean isRecord = true;
     static boolean isKeyword = true;
+    static String errorMessage = "fail to get key";
+    static String[] sendAr = null;
 
-    @PostMapping("product")
+    @RequestMapping("/search")
     public String search(@RequestParam("name") String name) throws IOException, InterruptedException {
-    //public String search(@RequestParam(value = "name") String name, Model model){
+        //public String search(@RequestParam(value = "name") String name, Model model){
         System.out.println("검색: " + name);
-        String[] sendAr = null;
 
         // 검색어가 없는 경우
         if (name.isBlank()){
@@ -31,9 +35,9 @@ public class SearchController {
                 sendAr = new String[]{"0"};
 
                 SocketClient.connect();
-                int ret = SocketClient.sendForRecord(sendAr);
+                String ret = SocketClient.sendForRecord(sendAr);
 
-                while (ret == 101) {
+                while (ret.equals(errorMessage)) {
                     // 음성 입력 실패 시, 다시 입력 받기
                     System.out.println("again message out");
                     sleep(500);
@@ -48,6 +52,8 @@ public class SearchController {
                 }
                 SocketClient.disconnect();
 
+                sendAr = new String[]{ret};
+
                 isRecord = true;
             }
             // 이미 음성 입력을 받고 있는 경우
@@ -59,20 +65,13 @@ public class SearchController {
         else {
             if (isKeyword) {
                 // 음성 입력을 받고 있는 경우, 연결 끊기
-                if (!isRecord) SocketClient.disconnect();
+                if (SocketClient.socket.isConnected()) SocketClient.disconnect();
 
                 isRecord = false;
                 isKeyword = false;
 
 //            Arrays.fill(sendAr, name);
                 sendAr = new String[]{name};
-
-                SocketClient.connect();
-                SocketClient.sendForKeyword(sendAr);
-                SocketClient.disconnect();
-
-                isRecord = true;
-                isKeyword = true;
             }
             // 이미 검색어가 입력된 경우
             else {
@@ -84,10 +83,34 @@ public class SearchController {
 
 
         // (로딩 화면 띄우다가)
-        return "product";           //소켓 응답 받으면 product로 연결하든가
+        return "spinner";           //소켓 응답 받으면 product로 연결하든가
 
         //AccessToProductDB.main(); => DB에서 읽어와 View로 띄우는 부분은 productsListController에서 처리하면 됨
 
+    }
+
+    @RequestMapping("/spinner")
+    public String spinner(Model model) throws IOException, InterruptedException {
+
+        System.out.println("keyword in spinner: " + sendAr[0]);
+
+        // 로딩 음성 출력
+        System.out.println("loading message out");
+//        sleep(1000);
+        String mp3 = "src/main/resources/MP3/voice2.mp3";
+        MP3Player mp3Player = new MP3Player(mp3);
+        mp3Player.play();
+
+        if (SocketClient.socket.isConnected()) SocketClient.disconnect();
+
+        SocketClient.connect();
+        SocketClient.sendForKeyword(sendAr);
+        SocketClient.disconnect();
+
+        isRecord = true;
+        isKeyword = true;
+
+        return "redirect:/product";
     }
 }
 

@@ -6,23 +6,22 @@ import ssu.swcontest2023.sevice.ProductServiceSQL;
 import java.util.ArrayList;
 
 public class AccessToProductDB {
-    public static void main() {
 
-        //socket server (python) -> TABLE 생성해두었다는 가정 하에 DB 접근해서 사용할 예정
+    static ProductServiceSQL db = new ProductServiceSQL();
 
-        ProductServiceSQL p = new ProductServiceSQL();
-        ArrayList<Product> list = p.selectAll();        //productList: view에서 이용!
+    public static ArrayList<Product> selectListFromDB() {
+        return db.selectAll();
+    }
 
-        //프린트 TEST
+    public static Product selectOneFromDB(int id){
+        return db.selectById(id);
+    }
+
+    public static void printProductList(ArrayList<Product> list){
         System.out.println("[Print All]");
         for (Product product : list) {
             printProduct(product);
         }
-        System.out.println();
-
-        Product product = p.selectById(1);
-        System.out.println("[Print One]");
-        printProduct(product);
     }
 
 
