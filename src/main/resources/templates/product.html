@@ -14,31 +14,31 @@
   <link href="css/styles.css?after" rel="stylesheet" />
 </head>
 <body>
-<!-- Navigation>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container px-4 px-lg-5">
+
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light bg-white py-3">
+  <div class="container px-5">
+    <a class="navbar-brand" href="index.html"> <span class="fw-bolder text-primary">ONLYONE 온리원</span></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <form class="d-flex">
-        <button class="btn btn-outline-dark" type="submit">
-          <i class="bi-cart-fill me-1"></i>
-          Cart
-          <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-        </button>
-      </form>
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0 small fw-bolder">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+      </ul>
     </div>
   </div>
-</nav-->
+</nav>
+
 <!-- Product section-->
 <section class="py-5">
   <div class="container px-4 px-lg-5 my-5">
     <div class="row gx-4 gx-lg-5 align-items-center">
-      <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" th:src="${product_link}" > product_link </div>
+      <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" th:src="${productLink}" > </div>
       <div class="col-md-6">
-        <div class="display-2 fw-bolder">
+        <div class="display-2 fw-bolder mt-5">
           <h1 th:text = "${productName}"> [[${productName}]] </h1>
         </div>
-        <div class="fs-5 mb-5">
+        <div class="fs-5 mb-1">
           <!--span class="fs-4 text-decoration-line-through">5,100&#92;</span-->
           <span>[[${productPrice}]]&#92;</span>
         </div>
@@ -47,7 +47,12 @@
         </div>
         <div class="d-flex pt-5">
           <!--input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" /-->
-          <span class="badge bg-dark text-white me-4 rounded-pill">0</span>
+          <!--span class="badge bg-dark text-white me-4 rounded-pill">0</span-->
+          <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xxl-start mb-3">
+            <!--p value = "${filename}" id = "filename"></p-->
+            <a class="btn btn-primary btn-lg px-5 py-3 me-sm-3 fs-3 fw-bolder" id="btnPause2">일시 정지</a>
+            <a class="btn btn-outline-dark btn-lg px-5 py-3 fs-3 fw-bolder" id="btnPlay2">다시 듣기</a>
+          </div>
           <!--button class="btn btn-outline-dark flex-shrink-1 fs-2 fw-bolder" type="button">
             <i class="bi-cart-fill me-1"></i>
             장바구니
@@ -60,7 +65,7 @@
 <!-- Related items section-->
 <section class="py-5 bg-light">
   <div class="container px-4 px-lg-5 mt-5">
-    <h2 class="fw-bolder mb-4">연관 상품</h2>
+    <h2 class="fw-bolder mb-4">다음 상품</h2>
     <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
       <div class="col mb-5">
         <div class="card h-100">
