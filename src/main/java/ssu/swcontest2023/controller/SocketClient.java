@@ -24,10 +24,13 @@ public class SocketClient {
                 dout.flush();
 
                 // 로딩 음성 출력
-                sleep(1000);
-                String mp3 = "src/main/resources/MP3/voice2.mp3";
-                MP3Player mp3Player = new MP3Player(mp3);
-                mp3Player.play();
+                if (!args[0].equals("0")) {
+                    System.out.println("loading message out");
+                    sleep(1000);
+                    String mp3 = "src/main/resources/MP3/voice2.mp3";
+                    MP3Player mp3Player = new MP3Player(mp3);
+                    mp3Player.play();
+                }
 
                 //System.out.println("send first mess");
                 String str = din.readUTF();//in.readLine();

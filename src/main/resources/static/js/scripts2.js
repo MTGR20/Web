@@ -37,7 +37,7 @@ btnPause.onclick = function () {
 //}
 
 btnSearch.onclick = function () {
-    myAutio.pause();
+    myAudio.pause();
     myAudio.currentTime = 0; // 재생시간을 처음으로 설정
 }
 
