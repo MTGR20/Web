@@ -11,7 +11,13 @@ import java.util.ArrayList;
 import static java.lang.Thread.sleep;
 
 public class SocketClient {
-        public static void main(String[] args) {
+
+    static Socket socket;
+    static DataOutputStream dout;
+    static DataInputStream din;
+    static String errorMessage = "fail to get key";
+
+    public static void main(String[] args) {
 
             try{
 //                Socket socket = new Socket("172.30.1.87",8000); //IPv4 값 수정해서 실행하세요
@@ -36,6 +42,11 @@ public class SocketClient {
                 String str = din.readUTF();//in.readLine();
                 System.out.println("리턴 받은 메세지: "+str);
 
+                // 검색된 상품이 없는 경우
+                if (str.equals("")) {
+                    // 처리 구현
+                }
+                
                 dout.close();
                 din.close();
                 socket.close();
@@ -44,5 +55,58 @@ public class SocketClient {
             catch(Exception e){
                 e.printStackTrace();}
 
+        }
+
+        public static void connect() throws IOException {
+            //                Socket socket = new Socket("172.30.1.87",8000); //IPv4 값 수정해서 실행하세요
+            socket = new Socket("127.0.0.1",8000);
+
+            dout = new DataOutputStream(socket.getOutputStream());
+            din = new DataInputStream(socket.getInputStream());
+        }
+
+        public static void unconnect() throws IOException {
+            dout.close();
+            din.close();
+            socket.close();
+        }
+
+        public static int sendForRecord(String[] args) throws IOException, InterruptedException {
+            dout.writeUTF(args[0]);
+            dout.flush();
+
+            //System.out.println("send first mess");
+            String str = din.readUTF();//in.readLine();
+            System.out.println("리턴 받은 메세지: "+str);
+
+            if (str.equals(errorMessage)) return 101;
+            // 검색된 상품이 없는 경우
+            else if (str.equals("")) searchNothing();
+
+            return 0;
+        }
+
+        public static void sendForKeyword(String[] args) throws IOException, InterruptedException {
+            dout.writeUTF(args[0]);
+            dout.flush();
+
+            // 로딩 음성 출력
+            System.out.println("loading message out");
+            sleep(1000);
+            String mp3 = "src/main/resources/MP3/voice2.mp3";
+            MP3Player mp3Player = new MP3Player(mp3);
+            mp3Player.play();
+
+            //System.out.println("send first mess");
+            String str = din.readUTF();//in.readLine();
+            System.out.println("리턴 받은 메세지: "+str);
+
+            // 검색된 상품이 없는 경우
+            if (str.equals("")) searchNothing();
+        }
+
+        public static void searchNothing() {
+            // 검색된 상품이 없는 경우 처리 구현
+            System.out.println("검색된 상품이 없습니다.");
         }
 }
