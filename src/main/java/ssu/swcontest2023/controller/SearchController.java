@@ -42,11 +42,11 @@ public class SearchController {
                     mp3Player.play();
 
                     sleep(2000);
-                    SocketClient.unconnect();
+                    SocketClient.disconnect();
                     SocketClient.connect();
                     ret = SocketClient.sendForRecord(sendAr);
                 }
-                SocketClient.unconnect();
+                SocketClient.disconnect();
 
                 isRecord = true;
             }
@@ -59,7 +59,7 @@ public class SearchController {
         else {
             if (isKeyword) {
                 // 음성 입력을 받고 있는 경우, 연결 끊기
-                if (!isRecord) SocketClient.unconnect();
+                if (!isRecord) SocketClient.disconnect();
 
                 isRecord = false;
                 isKeyword = false;
@@ -69,7 +69,7 @@ public class SearchController {
 
                 SocketClient.connect();
                 SocketClient.sendForKeyword(sendAr);
-                SocketClient.unconnect();
+                SocketClient.disconnect();
 
                 isRecord = true;
                 isKeyword = true;

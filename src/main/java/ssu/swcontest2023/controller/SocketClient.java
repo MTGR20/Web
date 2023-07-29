@@ -65,7 +65,7 @@ public class SocketClient {
             din = new DataInputStream(socket.getInputStream());
         }
 
-        public static void unconnect() throws IOException {
+        public static void disconnect() throws IOException {
             dout.close();
             din.close();
             socket.close();
