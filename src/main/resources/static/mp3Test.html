@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+</head>
+
+<body>
+<!-- 버튼 태그 생성 -->
+<button id="btnPlay">재생 버튼</button>
+<button id="btnPause">일시정지 버튼</button>
+<button id="btnStop">정지 버튼</button>
+
+</body>
+
+<script>
+    // Audio 객체 설정
+    const myAudio = new Audio();
+    myAudio.src = "mp3/voice1.mp3";
+
+    // 오디오 재생: 크롬브라우저에서 작동 안함
+    myAudio.play();
+
+    // 버튼 취득
+    const btnPlay = document.getElementById("btnPlay");
+    const btnPause = document.getElementById("btnPause");
+    const btnStop = document.getElementById("btnStop");
+
+    // 재생 버튼
+    btnPlay.onclick = function () {
+        myAudio.play();
+    }
+
+    // 일시정지 버튼
+    btnPause.onclick = function () {
+        myAudio.pause();
+    }
+
+    // 정지 버튼
+    btnStop.onclick = function () {
+        myAudio.pause();
+        myAudio.currentTime = 0; // 재생시간을 처음으로 설정
+    }
+
+</script>
+</html>
