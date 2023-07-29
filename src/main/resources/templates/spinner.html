@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 
   <title>spinner</title>
@@ -32,7 +32,8 @@
 
 <h2>loading...</h2>
 <div class="loader"></div>
-<meta http-equiv="refresh" content="1;product">
+<!--meta http-equiv="refresh" th:content="|0; url=${str}|"/-->
+<meta http-equiv="refresh" content="3;product"/>
 
 </body>
 </html>

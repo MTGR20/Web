@@ -1,6 +1,7 @@
 package ssu.swcontest2023.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,9 +28,17 @@ public class SearchController {
             sendAr = new String[]{"0"};
         }
 
-        SocketClient.main(sendAr);
-        return "redirect:/product";
+        //SocketClient.main(sendAr);
+
+        //return "product";
+        return "spinner";
     }
+
+//    @RequestMapping("/spinner")
+//    public void loading(Model model){
+//        SocketClient.main(sendAr);
+//        model.addAttribute("str", "product");
+//    }
 
 }
 
