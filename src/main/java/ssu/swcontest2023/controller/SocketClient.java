@@ -12,100 +12,88 @@ import static java.lang.Thread.sleep;
 
 public class SocketClient {
 
+    // 수정해서 사용하기
+//    static String host = "172.30.1.87";
+    static String host = "127.0.0.1";
+    static int port = 8000;
+
+    static boolean isUsable = true;
     static Socket socket;
     static DataOutputStream dout;
     static DataInputStream din;
-    static String errorMessage = "fail to get key";
 
-    public static void main(String[] args) {
+//    public static void main(String[] args) {
+//
+//            try{
+//                Socket socket = new Socket("10.21.20.14",8000); //IPv4 값 수정해서 실행하세요
+//
+//                DataOutputStream dout=new DataOutputStream(socket.getOutputStream());
+//                DataInputStream din=new DataInputStream(socket.getInputStream());
+//
+//                dout.writeUTF(args[0]);
+//                dout.flush();
+//
+//                // 로딩 음성 출력
+//                if (!args[0].equals("0")) {
+//                    System.out.println("loading message out");
+//                    sleep(1000);
+//                    String mp3 = "src/main/resources/MP3/voice2.mp3";
+//                    MP3Player mp3Player = new MP3Player(mp3);
+//                    mp3Player.play();
+//                }
+//
+//                //System.out.println("send first mess");
+//                String str = din.readUTF();//in.readLine();
+//                System.out.println("리턴 받은 메세지: "+ str);
+//
+//                // 검색된 상품이 없는 경우
+//                if (str.equals("")) {
+//                    // 처리 구현
+//                }
+//
+//                dout.close();
+//                din.close();
+//                socket.close();
+//            }
+//
+//            catch(Exception e){
+//                e.printStackTrace();}
+//
+//        }
 
-            try{
-                Socket socket = new Socket("10.21.20.14",8000); //IPv4 값 수정해서 실행하세요
+    // 소켓 연결하기
+    public static void connect() throws IOException {
+        System.out.println("SocketClient.connect()");
 
-                DataOutputStream dout=new DataOutputStream(socket.getOutputStream());
-                DataInputStream din=new DataInputStream(socket.getInputStream());
+        disconnect();
+        socket = new Socket(host, port);
+        dout = new DataOutputStream(socket.getOutputStream());
+        din = new DataInputStream(socket.getInputStream());
+    }
 
-                dout.writeUTF(args[0]);
-                dout.flush();
+    // 소켓 연결 끊기
+    public static void disconnect() throws IOException {
+        System.out.println("SocketClient.disconnect()");
 
-                // 로딩 음성 출력
-                if (!args[0].equals("0")) {
-                    System.out.println("loading message out");
-                    sleep(1000);
-                    String mp3 = "src/main/resources/MP3/voice2.mp3";
-                    MP3Player mp3Player = new MP3Player(mp3);
-                    mp3Player.play();
-                }
-
-                //System.out.println("send first mess");
-                String str = din.readUTF();//in.readLine();
-                System.out.println("리턴 받은 메세지: "+ str);
-
-                // 검색된 상품이 없는 경우
-                if (str.equals("")) {
-                    // 처리 구현
-                }
-                
-                dout.close();
-                din.close();
-                socket.close();
-            }
-
-            catch(Exception e){
-                e.printStackTrace();}
-
-        }
-
-        public static void connect() throws IOException {
-            //                Socket socket = new Socket("172.30.1.87",8000); //IPv4 값 수정해서 실행하세요
-            socket = new Socket("127.0.0.1",8000);
-            dout = new DataOutputStream(socket.getOutputStream());
-            din = new DataInputStream(socket.getInputStream());
-        }
-
-        public static void disconnect() throws IOException {
-            System.out.println("socket disconnect");
+        if (socket == null) return;
+        if (socket.isConnected()) {
             dout.close();
             din.close();
             socket.close();
         }
+//        while (socket.isConnected()) System.out.print(".");
+    }
 
-        public static String sendForRecord(String[] args) throws IOException, InterruptedException {
-            dout.writeUTF(args[0]);
-            dout.flush();
+    // 메시지 보내기
+    public static String sendMessage(String sendMessage) throws IOException, InterruptedException {
+        System.out.println("SocketClient.sendMessage(): " + sendMessage);
 
-            //System.out.println("send first mess");
-            String str = din.readUTF();//in.readLine();
-            System.out.println("리턴 받은 메세지: "+str);
+        dout.writeUTF(sendMessage);
+        dout.flush();
 
-            if (str.equals(errorMessage)) return errorMessage;
-            // 검색된 상품이 없는 경우
-            else if (str.equals("")) searchNothing();
+        String receiveMessage = din.readUTF();//in.readLine();
+        System.out.println("리턴 받은 메세지: " + receiveMessage);
 
-            return str;
-        }
-
-        public static void sendForKeyword(String[] args) throws IOException, InterruptedException {
-            dout.writeUTF(args[0]);
-            dout.flush();
-
-//            // 로딩 음성 출력
-//            System.out.println("loading message out");
-//            sleep(1000);
-//            String mp3 = "src/main/resources/MP3/voice2.mp3";
-//            MP3Player mp3Player = new MP3Player(mp3);
-//            mp3Player.play();
-
-            //System.out.println("send first mess");
-            String str = din.readUTF();//in.readLine();
-            System.out.println("리턴 받은 메세지: "+str);
-
-            // 검색된 상품이 없는 경우
-            if (str.equals("")) searchNothing();
-        }
-
-        public static void searchNothing() {
-            // 검색된 상품이 없는 경우 처리 구현
-            System.out.println("검색된 상품이 없습니다.");
-        }
+        return receiveMessage;
+    }
 }

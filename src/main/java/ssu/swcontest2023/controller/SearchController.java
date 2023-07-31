@@ -15,102 +15,103 @@ import static java.lang.Thread.sleep;
 @Controller
 public class SearchController {
 
-    //private static final String path = "C:\\Users\\jweun\\Spring\\sw-contest-2023\\src\\main\\resources\\"; //경로 수정해서 사용하세요
-    static boolean isRecord = true;
-    static boolean isKeyword = true;
-    static String errorMessage = "fail to get key";
-    static String[] sendAr = null;
+    static String sendMessage = "";
+    static String receiveMessage = "";
+    static boolean isKeyword = false;
+
+    static final String errorMessageInStt = "fail to get key";
+    static final String errorMessageInDb = "no items";
 
     @RequestMapping("/search")
     public String search(@RequestParam("name") String name) throws IOException, InterruptedException {
-        //public String search(@RequestParam(value = "name") String name, Model model){
-        System.out.println("검색: " + name);
+        System.out.println("search(): " + name);
 
-        // 검색어가 없는 경우
+        // 검색어가 없는 경우, 음성 입력 받아오기
         if (name.isBlank()){
-            if (isRecord) {
-                System.out.println("execute recoding");
-                isRecord = false;
+            if (!isKeyword && SocketClient.isUsable) {
+                SocketClient.isUsable = false;
 
-                sendAr = new String[]{"0"};
+                sendMessage = "0";
+                while (receiveMessage.isBlank()) {
+                    System.out.println("search(): request recoding");
 
-                SocketClient.connect();
-                String ret = SocketClient.sendForRecord(sendAr);
-
-                while (ret.equals(errorMessage)) {
-                    // 음성 입력 실패 시, 다시 입력 받기
-                    System.out.println("again message out");
-                    sleep(500);
-                    String mp3 = "src/main/resources/MP3/voice3.mp3";
-                    MP3Player mp3Player = new MP3Player(mp3);
-                    mp3Player.play();
-
-                    sleep(2000);
-                    SocketClient.disconnect();
                     SocketClient.connect();
-                    ret = SocketClient.sendForRecord(sendAr);
+                    receiveMessage = SocketClient.sendMessage(sendMessage);
+
+                    // 음성 입력 실패 시, 다시 입력 받기
+                    if (receiveMessage.equals(errorMessageInStt)) {
+                        playMP3("src/main/resources/MP3/voice3.mp3", 500);
+                        receiveMessage = "";
+                        sleep(2000);
+                    }
+                    SocketClient.disconnect();
                 }
-                SocketClient.disconnect();
+                sendMessage = receiveMessage;
 
-                sendAr = new String[]{ret};
-
-                isRecord = true;
+                SocketClient.isUsable = true;
             }
-            // 이미 음성 입력을 받고 있는 경우
             else {
-                System.out.println("fail to socket connect: already execute recoding");
+                System.out.println("error:: search(): fail to request socket");
+                SocketClient.disconnect();
+                return "redirect:/";
             }
         }
         // 검색어가 있는 경우
         else {
-            if (isKeyword) {
-                // 음성 입력을 받고 있는 경우, 연결 끊기
-                if (SocketClient.socket.isConnected()) SocketClient.disconnect();
-
-                isRecord = false;
-                isKeyword = false;
-
-//            Arrays.fill(sendAr, name);
-                sendAr = new String[]{name};
+            if (!isKeyword) {
+                SocketClient.disconnect();
+                isKeyword = true;
+                sendMessage = name;
             }
-            // 이미 검색어가 입력된 경우
             else {
-                System.out.println("fail to socket connect: already input keyword");
+                System.out.println("error:: search(): keyword already exists");
+                SocketClient.disconnect();
+                return "redirect:/";
             }
         }
 
-//        SocketClient.main(sendAr);  //소켓 통신 요청 (:상품명 넘겨주고 상품 정보가 저장된 파일 경로 스트링 얻기 || 완료 메세지만 받기 ) / 아님 자바에서 디비 접근하게 할거면 파이썬 소켓 서버에서는 디비에 저장까지만 해도 됨
-
-
-        // (로딩 화면 띄우다가)
-        return "spinner";           //소켓 응답 받으면 product로 연결하든가
-
-        //AccessToProductDB.main(); => DB에서 읽어와 View로 띄우는 부분은 productsListController에서 처리하면 됨
-
+        return "spinner";
+//        return "redirect:/spinner";
     }
 
     @RequestMapping("/spinner")
     public String spinner(Model model) throws IOException, InterruptedException {
+        System.out.println("spinner(): " + sendMessage);
 
-        System.out.println("keyword in spinner: " + sendAr[0]);
+        // 검색어가 없는 경우
+        if (sendMessage.isBlank()) {
+            System.out.println("spinner(): sendMessage is blank");
+            SocketClient.disconnect();
+            return "redirect:/";
+        }
 
-        // 로딩 음성 출력
-        System.out.println("loading message out");
 //        sleep(1000);
-        String mp3 = "src/main/resources/MP3/voice2.mp3";
-        MP3Player mp3Player = new MP3Player(mp3);
-        mp3Player.play();
+        playMP3("src/main/resources/MP3/voice2.mp3", 0);
 
-        if (SocketClient.socket.isConnected()) SocketClient.disconnect();
+        SocketClient.isUsable = false;
 
         SocketClient.connect();
-        SocketClient.sendForKeyword(sendAr);
+        receiveMessage = SocketClient.sendMessage(sendMessage);
         SocketClient.disconnect();
 
-        isRecord = true;
-        isKeyword = true;
+        SocketClient.isUsable = true;
+
+        // 검색된 상품이 없는 경우 처리
+        if (receiveMessage.equals(errorMessageInDb)) {
+            System.out.println("spinner(): " + errorMessageInDb);
+            SocketClient.disconnect();
+            return "redirect:/";
+        }
 
         return "redirect:/product";
+    }
+
+    private void playMP3(String filename, int millis) throws InterruptedException {
+        System.out.println("mp3Play(): " + filename + ", " + millis);
+
+        sleep(millis);
+        MP3Player mp3Player = new MP3Player(filename);
+        mp3Player.play();
     }
 }
 

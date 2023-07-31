@@ -16,4 +16,5 @@ public class SwContest2023Application {
 
 	}
 
+
 }

@@ -13,9 +13,12 @@ import java.util.ArrayList;
 @Controller
 public class ProductsListController {
 
+    // 수정해서 사용하기
+    // 주의! SttAndTts.py의 dir_audio와 같은 경로여야 함.
+    static String dir_audio = "C:\\Users\\joyew\\Project\\sw23\\tmp";
+
     ArrayList<Product> productList;
     Product product;
-    static String dir_audio = "C:\\Users\\joyew\\Project\\sw23\\tmp";
     static String filename = null;
 
     @GetMapping("/product")

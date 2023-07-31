@@ -29,6 +29,7 @@ btnPlay.onclick = function () {
 
     if (chk) {
         console.log(55)
+//        chk = false;
         wait(4)
         btnSearch.click();
     }
