@@ -17,7 +17,7 @@ public class HomeController {
         SearchController.isKeyword = false;
 
         SocketClient.check();
-//        SocketClient.isUsable = true;
+        SocketClient.isUsable = true;
 
         return "home";
     }

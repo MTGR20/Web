@@ -29,13 +29,11 @@ public class SearchController {
 
         // 검색어가 없는 경우, 음성 입력 받아오기
         if (name.isBlank()){
-//            if (!isKeyword && SocketClient.isUsable) {
-            if (!isKeyword) {
-//                SocketClient.isUsable = false;
+            if (!isKeyword && SocketClient.isUsable) {
+                SocketClient.isUsable = false;
 
                 sendMessage = "0";
-                receiveMessage = errorMessageInStt;
-                while (receiveMessage.equals(errorMessageInStt)) {
+                while (!isKeyword && receiveMessage.isBlank()) {
                     System.out.println("search(): request recoding");
 
                     try {
@@ -51,11 +49,13 @@ public class SearchController {
                     if (receiveMessage.equals(errorMessageInStt)) {
                         playMP3("src/main/resources/MP3/voice3.mp3", 500);
                         sleep(2000);
+                        receiveMessage = "";
                     }
                 }
                 sendMessage = receiveMessage;
 
-//                SocketClient.isUsable = true;
+                SocketClient.check();
+                SocketClient.isUsable = true;
             }
             else {
                 System.out.println("error:: search(): keyword already exists");
@@ -67,7 +67,7 @@ public class SearchController {
         else {
             if (!isKeyword) {
                 SocketClient.check();
-//                isKeyword = true;
+                isKeyword = true;
                 sendMessage = name;
             }
             else {
@@ -94,7 +94,7 @@ public class SearchController {
 //        sleep(1000);
         playMP3("src/main/resources/MP3/voice2.mp3", 0);
 
-//        SocketClient.isUsable = false;
+        SocketClient.isUsable = false;
 
         try {
             SocketClient.check();
@@ -104,8 +104,7 @@ public class SearchController {
         } catch (SocketException e) {
 
         }
-
-//        SocketClient.isUsable = true;
+        SocketClient.isUsable = true;
 
         // 검색된 상품이 없는 경우 처리
         if (receiveMessage.equals(errorMessageInDb)) {
