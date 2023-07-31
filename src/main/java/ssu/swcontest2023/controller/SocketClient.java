@@ -65,7 +65,6 @@ public class SocketClient {
     public static void connect() throws IOException {
         System.out.println("SocketClient.connect()");
 
-        disconnect();
         socket = new Socket(host, port);
         dout = new DataOutputStream(socket.getOutputStream());
         din = new DataInputStream(socket.getInputStream());
@@ -75,17 +74,21 @@ public class SocketClient {
     public static void disconnect() throws IOException {
         System.out.println("SocketClient.disconnect()");
 
+        dout.close();
+        din.close();
+        socket.close();
+    }
+
+    // 연결이 있다면 연결 끊기
+    public static void check() throws IOException {
+
         if (socket == null) return;
-        if (socket.isConnected()) {
-            dout.close();
-            din.close();
-            socket.close();
-        }
-//        while (socket.isConnected()) System.out.print(".");
+        if (socket.isConnected()) disconnect();
+        // while (socket.isConnected()) System.out.print(".");
     }
 
     // 메시지 보내기
-    public static String sendMessage(String sendMessage) throws IOException, InterruptedException {
+    public static String sendMessage(String sendMessage) throws IOException {
         System.out.println("SocketClient.sendMessage(): " + sendMessage);
 
         dout.writeUTF(sendMessage);

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
+import java.net.SocketException;
 
 import static java.lang.Thread.sleep;
 
@@ -24,54 +25,59 @@ public class SearchController {
 
     @RequestMapping("/search")
     public String search(@RequestParam("name") String name) throws IOException, InterruptedException {
-        System.out.println("search(): " + name);
+        System.out.println("search(): keyword: " + name);
 
         // 검색어가 없는 경우, 음성 입력 받아오기
         if (name.isBlank()){
-            if (!isKeyword && SocketClient.isUsable) {
-                SocketClient.isUsable = false;
+//            if (!isKeyword && SocketClient.isUsable) {
+            if (!isKeyword) {
+//                SocketClient.isUsable = false;
 
                 sendMessage = "0";
-                while (receiveMessage.isBlank()) {
+                receiveMessage = errorMessageInStt;
+                while (receiveMessage.equals(errorMessageInStt)) {
                     System.out.println("search(): request recoding");
 
-                    SocketClient.connect();
-                    receiveMessage = SocketClient.sendMessage(sendMessage);
+                    try {
+                        SocketClient.check();
+                        SocketClient.connect();
+                        receiveMessage = SocketClient.sendMessage(sendMessage);
+                        SocketClient.disconnect();
+                    } catch (SocketException e) {
+
+                    }
 
                     // 음성 입력 실패 시, 다시 입력 받기
                     if (receiveMessage.equals(errorMessageInStt)) {
                         playMP3("src/main/resources/MP3/voice3.mp3", 500);
-                        receiveMessage = "";
                         sleep(2000);
                     }
-                    SocketClient.disconnect();
                 }
                 sendMessage = receiveMessage;
 
-                SocketClient.isUsable = true;
+//                SocketClient.isUsable = true;
             }
             else {
-                System.out.println("error:: search(): fail to request socket");
-                SocketClient.disconnect();
+                System.out.println("error:: search(): keyword already exists");
+                SocketClient.check();
                 return "redirect:/";
             }
         }
         // 검색어가 있는 경우
         else {
             if (!isKeyword) {
-                SocketClient.disconnect();
-                isKeyword = true;
+                SocketClient.check();
+//                isKeyword = true;
                 sendMessage = name;
             }
             else {
                 System.out.println("error:: search(): keyword already exists");
-                SocketClient.disconnect();
+                SocketClient.check();
                 return "redirect:/";
             }
         }
 
         return "spinner";
-//        return "redirect:/spinner";
     }
 
     @RequestMapping("/spinner")
@@ -81,25 +87,30 @@ public class SearchController {
         // 검색어가 없는 경우
         if (sendMessage.isBlank()) {
             System.out.println("spinner(): sendMessage is blank");
-            SocketClient.disconnect();
+            SocketClient.check();
             return "redirect:/";
         }
 
 //        sleep(1000);
         playMP3("src/main/resources/MP3/voice2.mp3", 0);
 
-        SocketClient.isUsable = false;
+//        SocketClient.isUsable = false;
 
-        SocketClient.connect();
-        receiveMessage = SocketClient.sendMessage(sendMessage);
-        SocketClient.disconnect();
+        try {
+            SocketClient.check();
+            SocketClient.connect();
+            receiveMessage = SocketClient.sendMessage(sendMessage);
+            SocketClient.disconnect();
+        } catch (SocketException e) {
 
-        SocketClient.isUsable = true;
+        }
+
+//        SocketClient.isUsable = true;
 
         // 검색된 상품이 없는 경우 처리
         if (receiveMessage.equals(errorMessageInDb)) {
             System.out.println("spinner(): " + errorMessageInDb);
-            SocketClient.disconnect();
+            SocketClient.check();
             return "redirect:/";
         }
 
