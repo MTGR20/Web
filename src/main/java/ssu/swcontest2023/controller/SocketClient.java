@@ -19,6 +19,7 @@ public class SocketClient {
     static DataOutputStream dout;
     static DataInputStream din;
     static String errorMessage = "fail to get key";
+    static String host = "10.21.20.17";
 
 //    public static void main(String[] args) {
 //>>>>>>> tmp
@@ -103,7 +104,7 @@ public class SocketClient {
 
     public static void connect() throws IOException {
         //                Socket socket = new Socket("172.30.1.87",8000); //IPv4 값 수정해서 실행하세요
-        socket = new Socket("127.0.0.1",8000);
+        socket = new Socket(host,8000);
         dout = new DataOutputStream(socket.getOutputStream());
         din = new DataInputStream(socket.getInputStream());
     }

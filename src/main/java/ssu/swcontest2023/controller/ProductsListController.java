@@ -13,39 +13,25 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import static java.lang.Thread.sleep;
-//import static ssu.swcontest2023.controller.SocketClient.disconnect;
+import static ssu.swcontest2023.controller.SocketClient.disconnect;
 
 @Controller
 public class ProductsListController {
 
     //static String dir_audio = "/Users/leechanho8511/PycharmProjects/ssu_merge/audio";
-//    static String dir_audio = "C:\\Users\\jweun\\PycharmProjects\\swContest2023\\audio";
-    static String dir_audio = "C:\\Users\\joyew\\Project\\sw23\\tmp";
+    static String dir_audio = "C:\\Users\\jweun\\PycharmProjects\\swContest2023\\audio";
     static String filename = null;
 
     String[] sendAr = null;
 
     ArrayList<Product> productList;
     Product product;
-    //Product product1, product2, product3, product4;
 
     int id = 0;
-
-//    @PostMapping("/search")
-//    public String search(@RequestParam("name") String name) {
-//
-//        sendAr = new String[]{name};
-//        if (name.isBlank()){
-//            sendAr = new String[]{"0"};
-//        }
-//
-//        return "redirect:/product";
-//    }
 
     @GetMapping("/product")
     public void productView(Model model){
 
-        //System.out.println("send msg: " + Arrays.toString(sendAr));
         //SocketClient.main(sendAr); //OCR 아껴야해서 일단 빼둘게요
 
         productList = AccessToProductDBRepository.selectListFromDB();
@@ -54,51 +40,33 @@ public class ProductsListController {
     }
 
     @RequestMapping("/buynext")
-    public String buynext(Model model) throws IOException {
-        System.out.println("buynext on!");
+    public String buynext(Model model) throws IOException, InterruptedException {
 
-        System.out.println("id:" + id);
+        System.out.println("buynext on!");
+        System.out.println("id:" + id+1);
+
         id++;
         setProductInfo(model);
 
         System.out.println(filename);
         MP3Player mp3Player = new MP3Player(filename);
         mp3Player.play();
-
-        try {
-            Thread.sleep(25000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
 
         String mp3 = "src/main/resources/MP3/opt.mp3";
         mp3Player = new MP3Player(mp3);
         mp3Player.play();
 
-        try {
-            Thread.sleep(9000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
         String _mp3 = "src/main/resources/MP3/MP_Pling.mp3";
         MP3Player _mp3Player = new MP3Player(_mp3);
         _mp3Player.play();
-
-        System.out.println("ProductsListController.buynext");
-
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        sleep(2000);
 
         return "productSlide";
     }
 
     @GetMapping("/productSlide")
-    public String temp1(Model model) throws IOException {
-        System.out.println("id:" + id);
+    public String temp1(Model model) throws IOException, InterruptedException {
+        System.out.println("id:" + id+1);
 
         id++;
         setProductInfo(model);
@@ -107,23 +75,10 @@ public class ProductsListController {
         MP3Player mp3Player = new MP3Player(filename);
         mp3Player.play();
 
-        try {
-            Thread.sleep(25000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
         String _mp3 = "src/main/resources/MP3/MP_Pling.mp3";
         MP3Player _mp3Player = new MP3Player(_mp3);
         _mp3Player.play();
-
-        System.out.println("ProductsListController.temp1");
-
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        sleep(2000);
 
         return "product2";
     }
@@ -131,23 +86,8 @@ public class ProductsListController {
 
     @RequestMapping("/product2")
     public String temp2(Model model) throws IOException {
-        System.out.println("id:" + id);
 
-        id++;
         setProductInfo(model);
-
-//        // 음성 출력
-//        String _mp3 = "src/main/resources/MP3/MP_Pling.mp3";
-//        MP3Player _mp3Player = new MP3Player(_mp3);
-//        _mp3Player.play();
-//        System.out.println("ProductsListController.temp2");
-//
-//        try {
-//            Thread.sleep(3000);
-//        } catch (InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
-
         return "redirect:/productSlide";
     }
 
@@ -169,11 +109,7 @@ public class ProductsListController {
         filename = dir_audio + "\\" + id + ".mp3";
 
         System.out.println(stts_msg);
-//<<<<<<< HEAD
-//=======
-//        model.addAttribute("productName", name);
-//        model.addAttribute("productLink", pic);
-//>>>>>>> tmp
+        //model.addAttribute("productInfo", stts_msg);
         model.addAttribute("productInfo", msg);
         model.addAttribute("productName", name);
         model.addAttribute("productPic", pic);

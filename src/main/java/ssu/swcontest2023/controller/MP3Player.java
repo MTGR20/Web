@@ -44,6 +44,7 @@ class MP3Player {
     }
 
     public void play() {
+
         try {
             FileInputStream fileInputStream = new FileInputStream(mp3FileToPlay);
             BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
@@ -62,6 +63,10 @@ class MP3Player {
                 }
             }
         }.start();
+
+       while (true){
+           if (jlPlayer.isComplete()) break;
+       }
 
     }
 

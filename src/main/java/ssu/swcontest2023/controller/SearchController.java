@@ -100,17 +100,14 @@ public class SearchController {
 
         // 로딩 음성 출력
         System.out.println("loading message out");
-//        sleep(1000);
         String mp3 = "src/main/resources/MP3/voice2.mp3";
         MP3Player mp3Player = new MP3Player(mp3);
         mp3Player.play();
-//
-//        if (SocketClient.socket.isConnected()) SocketClient.disconnect();
-//
-//        SocketClient.connect();
-//        SocketClient.sendForKeyword(sendAr);
-//        SocketClient.disconnect();
-        sleep(5000);
+
+        if (SocketClient.socket.isConnected()) SocketClient.disconnect();
+        SocketClient.connect();
+        SocketClient.sendForKeyword(sendAr);
+        SocketClient.disconnect();
 
         isRecord = true;
         isKeyword = true;
