@@ -45,7 +45,7 @@ public class ProductsListController {
     @GetMapping("/product")
     public void productView(Model model){
 
-        System.out.println("send msg: " + Arrays.toString(sendAr));
+        //System.out.println("send msg: " + Arrays.toString(sendAr));
         //SocketClient.main(sendAr); //OCR 아껴야해서 일단 빼둘게요
 
         productList = AccessToProductDBRepository.selectListFromDB();
@@ -61,9 +61,18 @@ public class ProductsListController {
         id++;
         setProductInfo(model);
 
+        System.out.println(filename);
+        MP3Player mp3Player = new MP3Player(filename);
+        mp3Player.play();
+
+        try {
+            Thread.sleep(25000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
         String mp3 = "src/main/resources/MP3/opt.mp3";
-        MP3Player mp3Player = new MP3Player(mp3);
+        mp3Player = new MP3Player(mp3);
         mp3Player.play();
 
         try {
@@ -93,6 +102,16 @@ public class ProductsListController {
 
         id++;
         setProductInfo(model);
+
+        System.out.println(filename);
+        MP3Player mp3Player = new MP3Player(filename);
+        mp3Player.play();
+
+        try {
+            Thread.sleep(25000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
         String _mp3 = "src/main/resources/MP3/MP_Pling.mp3";
         MP3Player _mp3Player = new MP3Player(_mp3);
@@ -146,9 +165,8 @@ public class ProductsListController {
         String stts_msg = rank + "번 제품의 이름은 " + name + "입니다. 가격은 " +
                 price + "원 입니다. 알러지정보는 " + allergy + "입니다.";
 
+        String msg = "알러지정보는 " + allergy + "입니다.";
         filename = dir_audio + "\\" + id + ".mp3";
-        MP3Player mp3Player = new MP3Player(filename);
-        mp3Player.play();
 
         System.out.println(stts_msg);
 //<<<<<<< HEAD
@@ -156,7 +174,7 @@ public class ProductsListController {
 //        model.addAttribute("productName", name);
 //        model.addAttribute("productLink", pic);
 //>>>>>>> tmp
-        model.addAttribute("productInfo", stts_msg);
+        model.addAttribute("productInfo", msg);
         model.addAttribute("productName", name);
         model.addAttribute("productPic", pic);
         model.addAttribute("productPrice", price);

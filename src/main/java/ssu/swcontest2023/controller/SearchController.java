@@ -104,12 +104,13 @@ public class SearchController {
         String mp3 = "src/main/resources/MP3/voice2.mp3";
         MP3Player mp3Player = new MP3Player(mp3);
         mp3Player.play();
-
-        if (SocketClient.socket.isConnected()) SocketClient.disconnect();
-
-        SocketClient.connect();
-        SocketClient.sendForKeyword(sendAr);
-        SocketClient.disconnect();
+//
+//        if (SocketClient.socket.isConnected()) SocketClient.disconnect();
+//
+//        SocketClient.connect();
+//        SocketClient.sendForKeyword(sendAr);
+//        SocketClient.disconnect();
+        sleep(5000);
 
         isRecord = true;
         isKeyword = true;
