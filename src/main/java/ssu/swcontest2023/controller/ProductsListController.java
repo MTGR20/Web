@@ -4,9 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ssu.swcontest2023.AccessToProductDB;
+import ssu.swcontest2023.repository.AccessToProductDBRepository;
 import ssu.swcontest2023.domain.Product;
 
 import java.util.ArrayList;
@@ -38,7 +37,7 @@ public class ProductsListController {
         //SocketClient.main(sendAr); //OCR 아껴야해서 일단 빼둘게요
 
         int id = 0;
-        productList = AccessToProductDB.selectListFromDB();
+        productList = AccessToProductDBRepository.selectListFromDB();
         setProductInfo(model, id);
 
         /*//TEST

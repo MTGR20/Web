@@ -1,11 +1,11 @@
-package ssu.swcontest2023;
+package ssu.swcontest2023.repository;
 
 import ssu.swcontest2023.domain.Product;
 import ssu.swcontest2023.sevice.ProductServiceSQL;
 
 import java.util.ArrayList;
 
-public class AccessToProductDB {
+public class AccessToProductDBRepository {
 
     static ProductServiceSQL db = new ProductServiceSQL();
 

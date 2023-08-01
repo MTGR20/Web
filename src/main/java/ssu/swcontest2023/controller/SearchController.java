@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ssu.swcontest2023.AccessToProductDB;
+import ssu.swcontest2023.repository.AccessToProductDB;
 
 import java.util.Arrays;
 
