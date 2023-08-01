@@ -14,7 +14,7 @@ public class SocketClient {
         public static void main(String[] args) {
 
             try{
-                Socket socket = new Socket("10.21.20.14",8000); //IPv4 값 수정해서 실행하세요
+                Socket socket = new Socket("192.168.91.162",8000); //IPv4 값 수정해서 실행하세요
 
                 DataOutputStream dout=new DataOutputStream(socket.getOutputStream());
                 DataInputStream din=new DataInputStream(socket.getInputStream());

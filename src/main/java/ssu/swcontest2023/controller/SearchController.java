@@ -1,4 +1,4 @@
-package ssu.swcontest2023.controller;
+/*package ssu.swcontest2023.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,3 +50,5 @@ public class SearchController {
 //3) Controller 는 요청 처리를 위해 -> Service 를 호출한다.
 //4) Service 는 적절히 데이터를 가공해 -> Controller 에게 넘긴다.
 //5) Controller 는 Service 의 결과물을 -> Client 에게 전달해준다. (*View)
+
+ */

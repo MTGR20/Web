@@ -12,9 +12,11 @@ public class ProductServiceSQL {
     private static final String driver = "com.mysql.cj.jdbc.Driver";
     private static final String url = "jdbc:mysql://localhost:3306";
     private static final String user = "root";
-    private static final String password = "lch741062@";
+    private static final String password = "root";
+    //private static final String password = "lch741062@";
 
-    private static final String schema = "use test_db";
+    private static final String schema = "use new_schema";
+    //private static final String schema = "use test_db";
     private static final String selectAllSQL = "select * from page_items";
     private static final String selectOneSQL = "select * from page_items where ranks = ";
 
