@@ -36,7 +36,7 @@ public class ProductServiceSQL {
 
         try {
             c = DriverManager.getConnection(url, user, password);   //DB 서버 연결
-            System.out.println("selectALL 연결 완료!!!");
+            System.out.println("연결 완료!!!");
 
             stmt = c.createStatement();   //SQL 실행 채널 생성
 

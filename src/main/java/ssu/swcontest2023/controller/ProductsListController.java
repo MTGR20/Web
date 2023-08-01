@@ -2,23 +2,37 @@ package ssu.swcontest2023.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ssu.swcontest2023.repository.AccessToProductDBRepository;
 import ssu.swcontest2023.domain.Product;
 
+import java.io.DataInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import static java.lang.Thread.sleep;
+import static ssu.swcontest2023.controller.SocketClient.disconnect;
+
 @Controller
 public class ProductsListController {
+
+    //static String dir_audio = "/Users/leechanho8511/PycharmProjects/ssu_merge/audio";
+    static String dir_audio = "C:\\Users\\jweun\\PycharmProjects\\swContest2023\\audio";
+    static String filename = null;
 
     String[] sendAr = null;
 
     ArrayList<Product> productList;
     Product product;
-    Product product1, product2, product3, product4;
+    //Product product1, product2, product3, product4;
+
+    int id = 0;
+
+
+    static String mp3 = "src/main/resources/MP3/opt.mp3";
+    static MP3Player mp3Player = new MP3Player(mp3);
 
     @PostMapping("/search")
     public String search(@RequestParam("name") String name) {
@@ -30,38 +44,157 @@ public class ProductsListController {
 
         return "redirect:/product";
     }
+
     @GetMapping("/product")
     public void productView(Model model){
 
         System.out.println("send msg: " + Arrays.toString(sendAr));
         //SocketClient.main(sendAr); //OCR 아껴야해서 일단 빼둘게요
 
-        int id = 0;
         productList = AccessToProductDBRepository.selectListFromDB();
-        setProductInfo(model, id);
+        setProductInfo(model);
 
-        /*//TEST
-        //다음 상품으로 넘기면 id 변경 후 ...
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
-        setProductInfo(model, id+1);
-         */
-
-        //상품 선택 입력되면
-        // return "homeplus"; //: 해당 product link 띄우기
     }
 
-    public void setProductInfo(Model model, int id){
+    @RequestMapping("/buynext")
+    public String buynext(Model model) throws IOException {
+        System.out.println("buynext on!");
+
+        System.out.println("id:" + id);
+        id++;
+        setProductInfo(model);
+
+        mp3Player.play();
+
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return "productSlide";
+    }
+
+    @GetMapping("/productSlide")
+    public String temp1(Model model) throws IOException {
+        System.out.println("id:" + id);
+
+        id++;
+        setProductInfo(model);
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        return "product2";
+    }
+
+
+    @RequestMapping("/product2")
+    public String temp2(Model model) throws IOException {
+        System.out.println("id:" + id);
+
+        id--;
+        setProductInfo(model);
+
+        // 음성 출력
+        mp3Player.play();
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        return "redirect:/productSlide";
+    }
+
+
+//    @GetMapping("/product/{id}")
+//    public String temp(@PathVariable int id){
+//
+//        try {
+//            Thread.sleep(3000);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//        String str = "다음"; // TEST
+//
+//        if (str.equals("구매")) {
+//            String link = String.format("%s", product.getLink()); //소스 링크 //마지막 링크 전달 시 사용
+//            return "redirect:" + link;
+//        }
+//        else if (str.equals("다음")) {
+//            id++;
+//        }
+//        else if (str.equals("이전")){
+//            id--;
+//        }
+//        return "product/"+id;
+//    }
+
+
+
+
+    /*
+    @RequestMapping("/buynext")
+    public String buynext(Model model) throws IOException {
+
+        System.out.println("buynext on!");
+
+        int port = SocketClient.portNo;
+        port++;
+        SocketClient.connect(port);
+        System.out.println("portNo: "+port);
+
+        SocketClient.dout.writeUTF("구매 의사");
+        SocketClient.dout.flush();
+
+        // 음성 출력
+        String mp3 = "src/main/resources/MP3/yes_or_no.mp3";
+        MP3Player mp3Player = new MP3Player(mp3);
+        mp3Player.play();
+
+        String str = SocketClient.din.readUTF();//in.readLine();
+        SocketClient.disconnect();
+
+        System.out.println("구매 의사 받기: " + str);
+        str = "다음"; // TEST
+
+        if (str.equals("구매")) {
+            String link = String.format("%s", product.getLink()); //소스 링크 //마지막 링크 전달 시 사용
+            return "redirect:" + link;
+        }
+        else if (str.equals("다음")) {
+            id++;
+        }
+        else if (str.equals("이전")){
+            id--;
+        }
+
+        System.out.println("id: "+id);
+
+        setProductInfo(model);
+        return "redirect:/buynext";
+        //return "redirect:/product/" + id;
+    }
+
+
+     */
+
+    //@PutMapping("/productSlide/{id}")
+    //public String setProductInfo(@PathVariable int id, Model model){
+    //@GetMapping("/product/{id}")
+    public void setProductInfo(Model model){
 
         product = productList.get(id);
 
         String rank = String.format("%d", product.getId());
         String name = String.format("%s", product.getName());
         String price = String.format("%s", product.getPrice());
-        //String link = String.format("%s", product.getLink()); //소스 링크 //마지막 링크 전달 시 사용
+        //String link = String.format("%s", product.getLink());
         String pic = String.format("%s", product.getPic());
         String allergy = String.format("%s", product.getAllergy());
 
@@ -83,42 +216,7 @@ public class ProductsListController {
             model.addAttribute("productPic"+i, pic);
             model.addAttribute("productPrice"+i, price);
         }
-        /*
-        //1번
-        product1 = productList.get(id+1);
-        String name1 = String.format("%s", product1.getName());
-        String price1 = String.format("%s", product1.getPrice());
-        String pic1 = String.format("%s", product1.getPic());
-        model.addAttribute("productName1", name1);
-        model.addAttribute("productPic1", pic1);
-        model.addAttribute("productPrice1", price1);
 
-        //2번
-        product2 = productList.get(id+2);
-        String name2 = String.format("%s", product2.getName());
-        String price2 = String.format("%s", product2.getPrice());
-        String pic2 = String.format("%s", product2.getPic());
-        model.addAttribute("productName2", name2);
-        model.addAttribute("productPic2", pic2);
-        model.addAttribute("productPrice2", price2);
-
-        //3번
-        product3 = productList.get(id+3);
-        String name3 = String.format("%s", product3.getName());
-        String price3 = String.format("%s", product3.getPrice());
-        String pic3 = String.format("%s", product3.getPic());
-        model.addAttribute("productName3", name3);
-        model.addAttribute("productPic3", pic3);
-        model.addAttribute("productPrice3", price3);
-
-        //4번
-        product4 = productList.get(id+4);
-        String name4 = String.format("%s", product4.getName());
-        String price4 = String.format("%s", product4.getPrice());
-        String pic4 = String.format("%s", product4.getPic());
-        model.addAttribute("productName4", name4);
-        model.addAttribute("productPic4", pic4);
-        model.addAttribute("productPrice4", price4);
-*/
+        //return "redirect:/buynext";
     }
 }
