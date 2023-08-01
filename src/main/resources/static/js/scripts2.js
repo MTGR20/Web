@@ -5,10 +5,12 @@
 */
 // This file is intentionally blank
 // Use this file to add JavaScript to your project
-$(window).load(function() {
-    $('#load').hide();
-});
+//$(window).load(function() {
+//    $('#load').hide();
+//});
 
+
+var chk = true;
 
 // Audio 객체 설정
 const myAudio = new Audio();
@@ -25,12 +27,20 @@ const btnSearch = document.getElementById("btnSearch");
 
 // 재생 버튼
 btnPlay.onclick = function () {
+    console.log(22)
     myAudio.currentTime = 0; // 재생시간을 처음으로 설정
     myAudio.play();
+
+    if (chk) {
+        console.log(55)
+        wait(4)
+        btnSearch.click();
+    }
 }
 
 // 일시정지 버튼
 btnPause.onclick = function () {
+    console.log(33)
     myAudio.pause();
 }
 
@@ -41,6 +51,7 @@ btnPause.onclick = function () {
 //}
 
 btnSearch.onclick = function () {
+    console.log(44)
     myAudio.pause();
     myAudio.currentTime = 0; // 재생시간을 처음으로 설정
 }
@@ -53,4 +64,11 @@ function DoStuffFunction() {
     btnPlay.click();
     console.log(11)
     window.removeEventListener('click', DoStuffFunction, false);
+}
+
+function wait(sec) {
+    let start = Date.now(), now = start;
+    while (now - start < sec * 1000) {
+        now = Date.now();
+    }
 }

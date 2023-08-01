@@ -1,26 +1,9 @@
-<<<<<<< HEAD:src/main/resources/static/css/common.css
-/*
-.loading{
-	visibility: hidden;
-	width: 100%;
-	height: 100%;
-	background-color: rgba(0, 0, 0, 0.6);
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	position: absolute;
-    left: 0vmin;
-    top: 0vmin;
-	z-index: 10;
-=======
 @import url("https://fonts.googleapis.com/css?family=Fredoka+One");
 
 .store-container {
   line-height:0;
   margin: 50px auto;
   width: 50%;
->>>>>>> tmp:src/main/resources/static/css/load_style.css
 }
 .stroke {
   stroke: #0170bb;
@@ -28,33 +11,6 @@
   stroke-linejoin: round;
   stroke-miterlimit: 10;
 }
-<<<<<<< HEAD:src/main/resources/static/css/common.css
-
-.loading img{
-	width: 42vmin;
-}
-*/
-
-#load {
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    position: fixed;
-    display: block;
-    opacity: 0.8;
-    background: white;
-    z-index: 99;
-    text-align: center;
-}
-
-#load > img {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    z-index: 100;
-}
-=======
 .round-end {
   stroke-linecap: round;
 }
@@ -303,4 +259,3 @@
 .sky-circle3 {
   animation: fadeInOut 8s 40s ease-in infinite;
 }
->>>>>>> tmp:src/main/resources/static/css/load_style.css

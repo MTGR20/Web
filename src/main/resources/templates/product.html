@@ -16,15 +16,21 @@
 </head>
 <body>
 
-<!--// div 는 전체 화면을 반투명하게 보여주는 역할을 합니다.-->
-<div id="load">
-  <img src="assets/loading.gif" alt="loading">
-</div>
+<!--<<<<<<< HEAD-->
+<!--&lt;!&ndash;// div 는 전체 화면을 반투명하게 보여주는 역할을 합니다.&ndash;&gt;-->
+<!--<div id="load">-->
+<!--  <img src="assets/loading.gif" alt="loading">-->
+<!--</div>-->
 
+<!--&lt;!&ndash; Navigation&ndash;&gt;-->
+<!--<nav class="navbar navbar-expand-lg navbar-light bg-white py-3">-->
+<!--  <div class="container px-5">-->
+<!--    <a class="navbar-brand" href="index.html"> <span class="fw-bolder text-primary">ONLYONE 온리원</span></a>-->
+<!--=======-->
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-light bg-white py-3">
   <div class="container px-5">
-    <a class="navbar-brand" href="index.html"> <span class="fw-bolder text-primary">ONLYONE 온리원</span></a>
+    <a class="navbar-brand" href="/"> <span class="fw-bolder text-primary">ONLYONE 온리원</span></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0 small fw-bolder">
@@ -39,11 +45,17 @@
 <section class="py-5">
   <div class="container px-4 px-lg-5 my-5">
     <div class="row gx-4 gx-lg-5 align-items-center">
+<!--<<<<<<< HEAD-->
       <!--본 상품 사진 링크-->
       <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" th:src="${productPic}" > </div>
       <div class="col-md-6">
         <div class="display-2 fw-bolder mt-5">
           <!--본 상품 이름 (상품명)-->
+<!--=======-->
+<!--      <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" th:src="${productLink}" > </div>-->
+<!--      <div class="col-md-6">-->
+<!--        <div class="display-2 fw-bolder mt-5">-->
+<!--&gt;>>>>>> tmp-->
           <h1 th:text = "${productName}"> [[${productName}]] </h1>
         </div>
         <div class="fs-5 mb-1">
@@ -59,8 +71,13 @@
           <!--span class="badge bg-dark text-white me-4 rounded-pill">0</span-->
           <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xxl-start mb-3">
             <!--p value = "${filename}" id = "filename"></p-->
+<!--<<<<<<< HEAD-->
             <a class="btn btn-primary btn-lg px-5 py-3 me-sm-3 fs-3 fw-bolder" id="btnPause2" type="button">일시 정지</a>
             <a class="btn btn-outline-dark btn-lg px-5 py-3 fs-3 fw-bolder" id="btnPlay2" type="button">다시 듣기</a>
+<!--=======-->
+<!--            <a class="btn btn-primary btn-lg px-5 py-3 me-sm-3 fs-3 fw-bolder" id="btnPause2">일시 정지</a>-->
+<!--            <a class="btn btn-outline-dark btn-lg px-5 py-3 fs-3 fw-bolder" id="btnPlay2">다시 듣기</a>-->
+<!--&gt;>>>>>> tmp-->
           </div>
           <!--button class="btn btn-outline-dark flex-shrink-1 fs-2 fw-bolder" type="button">
             <i class="bi-cart-fill me-1"></i>
@@ -75,7 +92,11 @@
 <!-- Related items section-->
 <section class="py-5 bg-light">
   <div class="container px-4 px-lg-5 mt-5">
+<!--<<<<<<< HEAD-->
     <h2 class="fw-bolder mb-4">추천 상품</h2>
+<!--=======-->
+<!--    <h2 class="fw-bolder mb-4">다음 상품</h2>-->
+<!--&gt;>>>>>> tmp-->
     <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
       <div class="col mb-5">
         <div class="card h-100">
@@ -197,7 +218,7 @@
 <!-- Core theme JS-->
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="js/common.js"></script>
-<meta http-equiv="refresh" content="1;buynext"/>
+<meta http-equiv="refresh" content="30;buynext"/>
 <!--meta http-equiv="refresh" content="3;productSlide"/-->
 </body>
 </html>

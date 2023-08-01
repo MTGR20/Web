@@ -13,13 +13,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import static java.lang.Thread.sleep;
-import static ssu.swcontest2023.controller.SocketClient.disconnect;
+//import static ssu.swcontest2023.controller.SocketClient.disconnect;
 
 @Controller
 public class ProductsListController {
 
     //static String dir_audio = "/Users/leechanho8511/PycharmProjects/ssu_merge/audio";
-    static String dir_audio = "C:\\Users\\jweun\\PycharmProjects\\swContest2023\\audio";
+//    static String dir_audio = "C:\\Users\\jweun\\PycharmProjects\\swContest2023\\audio";
+    static String dir_audio = "C:\\Users\\joyew\\Project\\sw23\\tmp";
     static String filename = null;
 
     String[] sendAr = null;
@@ -30,16 +31,16 @@ public class ProductsListController {
 
     int id = 0;
 
-    @PostMapping("/search")
-    public String search(@RequestParam("name") String name) {
-
-        sendAr = new String[]{name};
-        if (name.isBlank()){
-            sendAr = new String[]{"0"};
-        }
-
-        return "redirect:/product";
-    }
+//    @PostMapping("/search")
+//    public String search(@RequestParam("name") String name) {
+//
+//        sendAr = new String[]{name};
+//        if (name.isBlank()){
+//            sendAr = new String[]{"0"};
+//        }
+//
+//        return "redirect:/product";
+//    }
 
     @GetMapping("/product")
     public void productView(Model model){
@@ -145,7 +146,16 @@ public class ProductsListController {
         String stts_msg = rank + "번 제품의 이름은 " + name + "입니다. 가격은 " +
                 price + "원 입니다. 알러지정보는 " + allergy + "입니다.";
 
+        filename = dir_audio + "\\" + id + ".mp3";
+        MP3Player mp3Player = new MP3Player(filename);
+        mp3Player.play();
+
         System.out.println(stts_msg);
+//<<<<<<< HEAD
+//=======
+//        model.addAttribute("productName", name);
+//        model.addAttribute("productLink", pic);
+//>>>>>>> tmp
         model.addAttribute("productInfo", stts_msg);
         model.addAttribute("productName", name);
         model.addAttribute("productPic", pic);
