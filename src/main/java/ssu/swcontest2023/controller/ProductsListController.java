@@ -30,10 +30,6 @@ public class ProductsListController {
 
     int id = 0;
 
-
-    static String mp3 = "src/main/resources/MP3/opt.mp3";
-    static MP3Player mp3Player = new MP3Player(mp3);
-
     @PostMapping("/search")
     public String search(@RequestParam("name") String name) {
 
@@ -64,13 +60,29 @@ public class ProductsListController {
         id++;
         setProductInfo(model);
 
+
+        String mp3 = "src/main/resources/MP3/opt.mp3";
+        MP3Player mp3Player = new MP3Player(mp3);
         mp3Player.play();
 
         try {
-            Thread.sleep(10000);
+            Thread.sleep(9000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+
+        String _mp3 = "src/main/resources/MP3/MP_Pling.mp3";
+        MP3Player _mp3Player = new MP3Player(_mp3);
+        _mp3Player.play();
+
+        System.out.println("ProductsListController.buynext");
+
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
         return "productSlide";
     }
 
@@ -81,8 +93,14 @@ public class ProductsListController {
         id++;
         setProductInfo(model);
 
+        String _mp3 = "src/main/resources/MP3/MP_Pling.mp3";
+        MP3Player _mp3Player = new MP3Player(_mp3);
+        _mp3Player.play();
+
+        System.out.println("ProductsListController.temp1");
+
         try {
-            Thread.sleep(2000);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -95,98 +113,24 @@ public class ProductsListController {
     public String temp2(Model model) throws IOException {
         System.out.println("id:" + id);
 
-        id--;
+        id++;
         setProductInfo(model);
 
-        // 음성 출력
-        mp3Player.play();
-
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
-        return "redirect:/productSlide";
-    }
-
-
-//    @GetMapping("/product/{id}")
-//    public String temp(@PathVariable int id){
+//        // 음성 출력
+//        String _mp3 = "src/main/resources/MP3/MP_Pling.mp3";
+//        MP3Player _mp3Player = new MP3Player(_mp3);
+//        _mp3Player.play();
+//        System.out.println("ProductsListController.temp2");
 //
 //        try {
 //            Thread.sleep(3000);
 //        } catch (InterruptedException e) {
 //            throw new RuntimeException(e);
 //        }
-//
-//        String str = "다음"; // TEST
-//
-//        if (str.equals("구매")) {
-//            String link = String.format("%s", product.getLink()); //소스 링크 //마지막 링크 전달 시 사용
-//            return "redirect:" + link;
-//        }
-//        else if (str.equals("다음")) {
-//            id++;
-//        }
-//        else if (str.equals("이전")){
-//            id--;
-//        }
-//        return "product/"+id;
-//    }
 
-
-
-
-    /*
-    @RequestMapping("/buynext")
-    public String buynext(Model model) throws IOException {
-
-        System.out.println("buynext on!");
-
-        int port = SocketClient.portNo;
-        port++;
-        SocketClient.connect(port);
-        System.out.println("portNo: "+port);
-
-        SocketClient.dout.writeUTF("구매 의사");
-        SocketClient.dout.flush();
-
-        // 음성 출력
-        String mp3 = "src/main/resources/MP3/yes_or_no.mp3";
-        MP3Player mp3Player = new MP3Player(mp3);
-        mp3Player.play();
-
-        String str = SocketClient.din.readUTF();//in.readLine();
-        SocketClient.disconnect();
-
-        System.out.println("구매 의사 받기: " + str);
-        str = "다음"; // TEST
-
-        if (str.equals("구매")) {
-            String link = String.format("%s", product.getLink()); //소스 링크 //마지막 링크 전달 시 사용
-            return "redirect:" + link;
-        }
-        else if (str.equals("다음")) {
-            id++;
-        }
-        else if (str.equals("이전")){
-            id--;
-        }
-
-        System.out.println("id: "+id);
-
-        setProductInfo(model);
-        return "redirect:/buynext";
-        //return "redirect:/product/" + id;
+        return "redirect:/productSlide";
     }
 
-
-     */
-
-    //@PutMapping("/productSlide/{id}")
-    //public String setProductInfo(@PathVariable int id, Model model){
-    //@GetMapping("/product/{id}")
     public void setProductInfo(Model model){
 
         product = productList.get(id);
@@ -217,6 +161,5 @@ public class ProductsListController {
             model.addAttribute("productPrice"+i, price);
         }
 
-        //return "redirect:/buynext";
     }
 }
