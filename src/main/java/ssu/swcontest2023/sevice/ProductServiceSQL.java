@@ -15,8 +15,8 @@ public class ProductServiceSQL {
 //    private static final String password = "lch741062@";
     private static final String driver = "com.mysql.cj.jdbc.Driver";
     private static final String url = "jdbc:mysql://localhost:3306";
-    private static final String user = "sw23";
-    private static final String password = "sw23";
+    private static final String user = "crawl_usr";
+    private static final String password = "test1";
 
 //    private static final String schema = "use test_db";
 private static final String schema = "use homeplus";

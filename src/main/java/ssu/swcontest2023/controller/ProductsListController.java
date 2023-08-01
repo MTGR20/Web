@@ -15,7 +15,7 @@ public class ProductsListController {
 
     ArrayList<Product> productList;
     Product product;
-    static String dir_audio = "C:\\Users\\joyew\\Project\\sw23\\tmp";
+    static String dir_audio = "C:\\Users\\User\\IdeaProjects\\Web\\src\\main\\resources\\MP3";
     static String filename = null;
 
     @GetMapping("/product")
